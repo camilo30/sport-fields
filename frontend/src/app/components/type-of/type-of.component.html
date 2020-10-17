@@ -1,0 +1,144 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title yellow-text text-darken-2"><strong>Tipos de datos</strong></span>
+  </div>
+  <div class="card-tabs">
+    <ul class="tabs tabs-fixed-width">
+      <li class="tab"><a class="active" href="#test1">Usuario</a></li>
+      <li class="tab"><a href="#test2">Identificacion</a></li>
+      <li class="tab"><a href="#test6">Adjuntos</a></li>
+      <li class="tab"><a href="#test7">Reservas</a></li>
+      <li class="tab"><a href="#test8">Estados</a></li>
+    </ul>
+  </div>
+  <div class="card-content grey lighten-4">
+    <div id="test1">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="card small">
+            <div class="card-content">
+              <span class="card-title yellow-text text-darken-2"><strong>Tipos de Usuario</strong></span>
+              <table>
+                <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let userT of userTypes">
+                  <td> {{userT.code}}</td>
+                  <td> {{userT.desc}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div id="test2">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="card small">
+            <div class="card-content">
+              <span class="card-title yellow-text text-darken-2"><strong>Tipos de Identificación</strong></span>
+              <table>
+                <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let dniT of dniTypes">
+                  <td> {{dniT.code}}</td>
+                  <td> {{dniT.desc}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="test6">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="card small">
+            <div class="card-content">
+              <span class="card-title yellow-text text-darken-2"><strong>Tipos de Archivos Adjuntos</strong></span>
+              <table>
+                <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let atchT of atchTypes">
+                  <td> {{atchT.code}}</td>
+                  <td> {{atchT.desc}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="test7">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="card small">
+            <div class="card-content">
+              <span class="card-title yellow-text text-darken-2"><strong>Tipos de Reservas</strong></span>
+              <table>
+                <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let bkgT of bkgTypes">
+                  <td> {{bkgT.code}}</td>
+                  <td> {{bkgT.desc}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="test8">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="card ">
+            <div class="card-content">
+              <span class="card-title yellow-text text-darken-2"><strong>Estados de Reservas</strong></span>
+              <table>
+                <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Mensaje</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let bkgS of bkgStatus">
+                  <td> {{bkgS.code}}</td>
+                  <td> {{bkgS.name}}</td>
+                  <td> {{bkgS.desc}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

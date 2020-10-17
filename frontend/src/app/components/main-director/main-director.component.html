@@ -1,0 +1,169 @@
+<!-- BARRA SUPERIROR -->
+<nav>
+  <div class="nav-wrapper grey darken-4">
+    <div class="container">
+      <a href="#" class="brand-logo center"></a>
+      <a href="#" class="sidenav-trigger" data-target="mobile-demo"><i class="material-icons">menu</i></a>
+      <ul class="left">
+        <li><a routerLink="/"><img class="responsive-img"  src="../assets/logo-blanco2.png" alt=""></a></li>
+        <li>Módulo Director</li></ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a routerLink="/dni">Id</a></li>
+        <li><a href="">Usuarios</a></li>
+        <li><a routerLink="/fields">Escenarios</a></li>
+        <li><a routerLink="/types">Tipos</a></li>
+        <li><a href="/signinAdmin">Ingreso admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- BARRA MOVIL -->
+<ul class="sidenav" id="mobile-demo">
+  <li><div class="user-view">
+    <div class="background">
+      <img src="#">
+    </div>
+    <a href="#user"><img class="circle" src="#"></a>
+    <a href="#name"><span class="name"></span></a>
+    <a href="#email"><span class="email"></span></a>
+  </div></li>
+  <li><a routerLink="/dni">Id</a></li>
+  <li><a href="">Usuarios</a></li>
+  <li><a routerLink="/fields">Escenarios</a></li>
+  <li><a href="">Horarios</a></li>
+  <li><a href="/signinAdmin">Ingreso admin</a></li>
+</ul>
+
+
+<!-- IMAGEN 1 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="">
+      <div class=""><img src="../assets/uptc.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!--CALENDARIO -->
+<div class="container">
+  <div class="row">
+    <div class="col m12 s12 l12">
+      <div class="card">
+        <div class="card-content ">
+          <span class="card-title yellow-text text-darken-2"><strong>Calendario</strong></span>
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGEN 2 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc5.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!--  RESERVAS -->
+<div class="container">
+  <div class="row">
+    <div class="col m12 s12 l12">
+      <div class="card">
+        <div class="card-content ">
+          <span class="card-title yellow-text text-darken-2"><strong>Reservas</strong></span>
+          <ng-container *ngIf="bookings.length > 0; else noReservas">
+            <table class="responsive-table">
+              <thead class="center-align">
+              <th>Usuario</th>
+              <th>Escenario</th>
+              <th>Fecha</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+              </thead>
+              <tbody *ngFor="let ub of bookings">
+              <tr>
+                <td>{{ub.user.email }}</td>
+                <td>{{ub.schedule.field.name }}</td>
+                <td>{{ub.schedule.start | date}}</td>
+                <td>{{ub.schedule.start | date:'shortTime':'GMT'}}</td>
+                <td>{{ub.schedule.end | date:'shortTime':'GMT'}}</td>
+
+                <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
+                  <td ><span class="new badge teal darken-2" data-badge-caption="Solicitada"></span></td>
+                  <td>{{ub.bkgStatus.desc}}</td>
+                  <td>
+                    <a class="tooltipped btn red darken-2" data-position="top" data-tooltip="aa" (click)="CancelBooking(ub._id)"><i class="material-icons">cancel</i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="ub.bkgStatus.name === 'Cancelada'">
+                  <td><span class="new badge red darken-2" data-badge-caption="Cancelada"></span></td>
+                  <td>{{ub.bkgStatus.desc}}</td>
+                </ng-container>
+              </tr>
+              </tbody>
+            </table>
+          </ng-container>
+          <ng-template #noReservas>
+            No existen reservas.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGEN 3 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc4.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ESCENARIOS -->
+<div class="container">
+  <div class="row">
+    <app-fields></app-fields>
+  </div>
+</div>
+
+<!-- IMAGEN 4 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DISPONIBILIDAD -->
+<div class="container">
+  <div class="row">
+    <app-schedule></app-schedule>
+  </div>
+</div>
+
+<!-- IMAGEN 5 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIPOS DE DATOS -->
+<div class="container">
+  <div class="row">
+    <app-type-of></app-type-of>
+  </div>
+</div>

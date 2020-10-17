@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title yellow-text text-darken-2"><strong>Escenarios</strong></span>
+  </div>
+  <div class="card-tabs">
+    <ul class="tabs tabs-fixed-width">
+      <li class="tab"><a class="active" href="#test4">Escenarios</a></li>
+      <li class="tab"><a href="#test5">Nuevo Escenario</a></li>
+
+    </ul>
+  </div>
+
+
+  <div class="card-content grey lighten-4">
+    <div id="test4">
+
+      <div class="row">
+        <div class="col l4 m6 s12" *ngFor="let field of fields">
+          <div class="card small sticky-action hoverable">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" [src]="'http://localhost:3000/'+field.imagePath">
+            </div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4">{{field.name}}<i class="material-icons right">more_vert</i></span>
+            </div>
+            <div class="card-action">
+              <a (click)="selectedCard(field._id)">Actualizar</a>
+              <a (click)="deleteField(field._id)">Eliminar</a>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4">{{field.name}}<i class="material-icons right">close</i></span>
+              <p>Descripción: {{field.desc}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div id="test5">
+
+      <div class="row">
+        <div class="col l6 offset-l3 s12">
+          <div class="modalcontent">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Nuevo Escenario</span>
+                <form #fieldForm="ngForm" (submit)="addField(name,desc)">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input #name type="text" name="code" placeholder="Nombre del Escenario" required>
+                    </div>
+                    <div class="input-field col s12">
+                      <input #desc type="text" name="code" placeholder="Descripción del Escenario" required>
+                    </div>
+                    <div class="input-field col s12">
+                      <div class="file-field input-field">
+                        <div class="btn yellow darken-2">
+                          <i class="material-icons">add_a_photo</i>
+                          <input type="file" #photoInput (change)="onPhotoSelected($event)" >
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text" >
+                        </div>
+                        <img class="responsive-img" [src]=" photoSelected || 'assets/no-image.png'" alt="No Image" (click)="photoInput.click()">
+                      </div>
+                    </div>
+                    <div class="card-action">
+                      <div class="input-field col s5">
+                        <button class="btn yellow darken-2">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

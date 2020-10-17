@@ -1,0 +1,81 @@
+<nav>
+  <div class="nav-wrapper grey darken-4">
+    <div class="container">
+      <a href="#" class="brand-logo center"></a>
+      <a href="#" class="sidenav-trigger" data-target="mobile-demo"><i class="material-icons">menu</i></a>
+      <ul class="left">
+        <li><a routerLink="/"><img class="responsive-img"  src="../assets/logo-blanco2.png" alt=""></a></li>
+        <li>Préstamo de escenarios deportivos </li></ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/signin">Inicio</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+  <li><a href="/signin">Inicio</a></li>
+</ul>
+
+
+<div class="row">
+  <div class="col l6 offset-l3 s12 ">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">El usuario no existe en el sistema, por favor registrarse:</span>
+
+        <form [formGroup]="datos">
+          <div class="row">
+
+            <div class="input-field">
+              <input id="email" type="text" formControlName="email" placeholder="Correo electrónico" required disabled>
+            </div>
+
+            <div class="input-field">
+              <input id="name" type="text" name="name" formControlName="name" placeholder="Nombre" required autofocus>
+            </div>
+
+            <label>Tipo de identificación</label>
+            <div class="input-field">
+              <div *ngFor="let dt of dniTypes">
+                <label>
+                  <input class="with-gap" formControlName="dniType" [value]="dt.desc" type="radio"/>
+                  <span>{{dt.desc}}</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="input-field">
+              <input type="text" name="dni" formControlName="dni" placeholder="Número de identificación" required>
+            </div>
+
+            <div class="input-field">
+              <input type="text" name="phone" formControlName="phone" placeholder="Teléfono" required>
+            </div>
+
+            <ng-container *ngIf="(this.user.email).includes('uptc.edu.co')">
+              <div class="input-field">
+                <input type="text" name="code" formControlName="code" placeholder="Código" required>
+              </div>
+
+              <label>Tipo de usuario</label>
+              <div class="input-field">
+                <div *ngFor="let ut of userTypes">
+                  <label>
+                    <input id="op1" class="with-gap" formControlName="userType" [value]="ut.desc" type="radio" />
+                    <span>{{ut.desc}} </span>
+                  </label>
+                </div>
+              </div>
+            </ng-container>
+
+
+            <div class="input-field center">
+              <button type="submit" class="btn yellow darken-2" [disabled]="datos.invalid" (click)="signUp()">Registrarse</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

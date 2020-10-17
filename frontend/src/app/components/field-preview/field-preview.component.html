@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row" *ngIf="!field; else main_content">
+    <h1>Cargando...</h1>
+  </div>
+
+  <ng-template #main_content>
+    <div class="row">
+      <div class="col l3 m5 s12">
+        <div class="card">
+          <img class="responsive-img materialboxed" [src]="'http://localhost:3000/'+field.imagePath" alt="">
+        </div>
+      </div>
+
+      <div class="col l5 m5 s12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-title">Editar Escenario</div>
+            <form (submit)="updateField(name, desc)">
+              <div class="input-field">
+                <input #name type="text" id="Nombre" placeholder="Nombre del escenario" [value]="field.name">
+                <label class="active" for="Nombre">Nombre</label>
+              </div>
+              <div class="input-field">
+                <label class="active" for="desc">Descripción</label>
+                <textarea #desc id="desc" class="materialize-textarea" rows="2" placeholder="Descripción del escenario"
+                          [value]="field.desc"></textarea>
+              </div>
+              <div class="input-field">
+                <button class="btn yellow darken-2">Actualizar</button>
+                <button class="btn right red darken-2" (click)="deleteField(field._id)">Eliminar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+</div>
+

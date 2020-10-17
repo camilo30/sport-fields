@@ -1,0 +1,95 @@
+<div class="container">
+  <!-- NUEVA RESERVA -->
+  <ng-container *ngIf="field">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title yellow-text text-darken-2"><strong>Nueva Reserva</strong></span>
+        <img [src]="'http://localhost:3000/'+field.imagePath" height="100px" width="150px" alt="">
+        <app-calendar></app-calendar>
+        <form [formGroup]="datos">
+          <div class="input-field">
+            <input type="text" class="datepicker" placeholder="Fecha" formControlName="date">
+          </div>
+          <div class="input-field">
+            <input type="text" class="timepicker" placeholder="Hora de Inicio" formControlName="startT">
+          </div>
+          <div class="input-field">
+            <input type="text" class="timepicker" placeholder="Hora de Fin" formControlName="endT">
+          </div>
+          <div class="input-field">
+            <div id="test-slider"></div>
+          </div>
+        </form>
+        <div class="card-action">
+          <button class="btn yellow darken-2">Solicitar</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc.jpg"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <!-- LISTADO DE RESERVAS -->
+  <div class="row">
+    <div class="col s12 l12">
+      <div class="card">
+        <div class="card-content ">
+          <span class="card-title yellow-text text-darken-2"><strong>Mis Reservas</strong></span>
+
+          <ng-container *ngIf="userBookings.length > 0; else noReservas">
+            <table>
+              <thead class="center-align">
+              <th>Escenario</th>
+              <th>Fecha</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+              </thead>
+              <tbody *ngFor="let ub of userBookings">
+              <tr>
+                <td>{{ub.schedule.field.name }}</td>
+                <td>{{ub.schedule.start | date}}</td>
+                <td>{{ub.schedule.start | date:'shortTime': 'GMT'}}</td>
+                <td>{{ub.schedule.end | date:'shortTime':'GMT'}}</td>
+
+                <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
+                  <td ><span class="new badge teal darken-2" data-badge-caption="Solicitada"></span></td>
+                  <td>{{ub.bkgStatus.desc}}</td>
+                  <td>
+                    <a class="tooltipped btn red darken-2" data-position="top" data-tooltip="aa" (click)="CancelBooking(ub._id)"><i class="material-icons">cancel</i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="ub.bkgStatus.name === 'Cancelada'">
+                  <td><span class="new badge red darken-2" data-badge-caption="Cancelada"></span></td>
+                  <td>{{ub.bkgStatus.desc}}</td>
+                </ng-container>
+              </tr>
+
+              </tbody>
+            </table>
+          </ng-container>
+
+          <ng-template #noReservas>
+            No existen reservas.
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

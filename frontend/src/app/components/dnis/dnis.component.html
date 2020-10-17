@@ -1,0 +1,51 @@
+
+  <div class="row">
+    <div class="col l5 s12">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Tipos de ID</span>
+          <form #dniForm="ngForm" (ngSubmit)="addDni(dniForm)">
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="getDniService().selectedDni._id">
+            <div class="row">
+              <div class="input-field col s12">
+                <input type="text" name="code" #code="ngModel" [(ngModel)]="getDniService().selectedDni.code" placeholder="Código del tipo de identificación">
+              </div>
+              <div class="input-field col s12">
+                <input type="text" name="desc" #desc="ngModel" [(ngModel)]="getDniService().selectedDni.desc" placeholder="Descripcion del tipo de identificación">
+              </div>
+              <div class="card-action">
+                <div class="input-field col s12">
+                  <button class="btn yellow darken-2">Save</button>
+                  <button class="btn yellow darken-2 right" (click)="resetForm(dniForm)">Clean</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col l7 s12">
+      <div class="card">
+        <div class="card-content">
+      <table>
+        <thead>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Operaciones</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let dni of getDniService().dnis">
+          <td> {{dni.code}}</td>
+          <td> {{dni.desc}}</td>
+          <td>
+            <div class="btn yellow darken-2"><i (click)="editDni(dni)" class="material-icons">edit</i></div>
+            <div class="btn yellow darken-2"><i (click)="deleteDni(dni._id)" class="material-icons">delete</i></div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
