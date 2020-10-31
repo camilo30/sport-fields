@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TypesOfService } from '../../services/types-of.service';
 import { Router } from '@angular/router';
+import { User } from '../../models/user';
 import {ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {DniType, Role, UserType} from '../../models/types';
 declare var M: any;
 
 @Component({
@@ -13,18 +15,20 @@ declare var M: any;
 export class SignupComponent implements OnInit {
 
   datos: FormGroup;
-
-  userTypes: {code: '', desc: ''};
-  dniTypes = {code: '', desc: ''};
+  userTypes: UserType;
+  dniTypes: DniType;
+  roles: Role;
+  loggedUser: User;
   user = {
-    userType: '',
     name: '',
     dniType: '',
     dni: '',
-    code: '',
     phone: '',
     email: '',
-    password: ''
+    userType: '',
+    code: '',
+    role: '',
+    password: '',
   };
 
   constructor(
@@ -33,17 +37,54 @@ export class SignupComponent implements OnInit {
     private authService: AuthService,
     private typeOfService: TypesOfService
   ) {
-
-
-    /**
-     //Ver cambios en consola
-     this.datos.valueChanges.subscribe( res => {
-      console.log(res);
-    });
-     */
   }
 
+  ngOnInit(): void {
 
+    this.getUser();
+
+    this.authService.getCurrentEmail().subscribe(res => {
+      this.user.email = res;
+      this.crearFormulario();
+    }, error => console.log(error));
+
+    this.getTypes();
+
+
+  }
+
+  getUser(){
+    this.authService.getUser(localStorage.getItem('token')).subscribe(res => {
+      this.authService.setSelectedUser(res);
+
+    });
+
+    this.authService.selectedUser$.subscribe(res => {
+      this.loggedUser = res;
+      this.getTypes();
+    });
+  }
+
+  getTypes(){
+    if (this.loggedUser){
+      this.typeOfService.getUserTypes().subscribe(res => {
+        this.userTypes = res;
+      }, error => console.log(error) );
+      this.typeOfService.getDniTypes().subscribe(res => {
+        this.dniTypes = res;
+      }, error => console.log(error));
+      this.typeOfService.getRoles().subscribe(res => {
+        this.roles = res;
+      }, error => console.log(error));
+    }else {
+      this.typeOfService.getInternalUserTypes().subscribe(res => {
+        this.userTypes = res;
+      }, error => console.log(error) );
+      this.typeOfService.getDniTypes().subscribe(res => {
+        this.dniTypes = res;
+      }, error => console.log(error));
+    }
+  }
 
   crearFormulario(){
     this.datos  = this.formBuilder.group({
@@ -54,47 +95,23 @@ export class SignupComponent implements OnInit {
       email: [this.user.email, Validators.required],
       userType: [''],
       code: [''],
-      roles: [''], //para añadir admin
-      password:[''] //para añadir admin
+      role: [''], //para añadir director
+      password: [''] //para añadir director
     }, {updateOn: 'change'});
   }
 
-  ngOnInit(): void {
-
-    this.authService.getCurrentEmail().subscribe(res => {
-      this.user.email = res;
-      this.crearFormulario();
-    }, error => console.log(error));
-
-    this.typeOfService.getInternalUserTypes().subscribe(res => {
-      this.userTypes = res;
-    }, error => console.log(error) );
-
-    this.typeOfService.getDniTypes().subscribe(res => {
-      this.dniTypes = res;
-    }, error => console.log(error));
-  }
-
   signUp(){
-
-    /**
-     //Agrega los roles en segundo plano
-     this.datos.patchValue({roles:['admin','user']});
-     this.datos.patchValue({password:'admin'});*/
-    console.log(this.datos.value);
-
     this.authService.signUp(this.datos.value)
       .subscribe(
         res => {
-          console.log(res);
-          M.toast({html: 'Usuario registrado con èxito', classes: 'green darken-2'});
-          this.router.navigate(['/signin']);
-        },
-        err => console.log(err)
-      )
+          M.toast({html: 'Usuario registrado con éxito', classes: 'green darken-2'});
+          if (this.loggedUser){
+            this.router.navigate(['/mainA']);
+          }else{
+            this.router.navigate(['/signin']);
+          }
 
-
+        },err => console.log(err) );
   }
-
 
 }

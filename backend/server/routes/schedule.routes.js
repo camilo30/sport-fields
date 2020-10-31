@@ -7,6 +7,8 @@ const schedule = require('../controllers/schedule.controller');
 
 //Rutas horarios
 router.get('/', schedule.getSchedules);
+router.get('/dayField/:fieldId/:date', schedule.getDayFieldSchedules);
+router.get('/allField/:fieldId', schedule.getFieldFreeSchedules);
 router.get('/field/:fieldId', schedule.getFieldSchedules);
 router.get('/booked', schedule.getBookedSchedules);
 router.post('/',schedule.createSchedule);

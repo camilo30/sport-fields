@@ -6,12 +6,10 @@
     <ul class="tabs tabs-fixed-width">
       <li class="tab"><a class="active" href="#test4">Escenarios</a></li>
       <li class="tab"><a href="#test5">Nuevo Escenario</a></li>
-
     </ul>
   </div>
-
-
   <div class="card-content grey lighten-4">
+    <!-- TAB ESCENARIOS -->
     <div id="test4">
 
       <div class="row">
@@ -24,72 +22,102 @@
               <span class="card-title activator grey-text text-darken-4">{{field.name}}<i class="material-icons right">more_vert</i></span>
             </div>
             <div class="card-action">
-              <a (click)="selectedCard(field._id)">Actualizar</a>
               <a (click)="deleteField(field._id)">Eliminar</a>
             </div>
             <div class="card-reveal">
-              <span class="card-title grey-text text-darken-4">{{field.name}}<i class="material-icons right">close</i></span>
+            <span class="card-title grey-text text-darken-4">{{field.name}}<i
+              class="material-icons right">close</i></span>
               <p>Descripción: {{field.desc}}</p>
+              <p><i style="color:{{field.color}};" class=" material-icons">lens</i></p>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
-    <div id="test5">
 
+    <!-- TAB NUEVO ESCENARIO -->
+    <div id="test5">
       <div class="row">
         <div class="col l6 offset-l3 s12">
-          <div class="modalcontent">
-            <div class="card">
-              <div class="card-content">
-                <span class="card-title">Nuevo Escenario</span>
-                <form #fieldForm="ngForm" (submit)="addField(name,desc)">
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input #name type="text" name="code" placeholder="Nombre del Escenario" required>
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Nuevo Escenario</span>
+              <form #fieldForm="ngForm" (submit)="addField(name,desc,color)">
+                <div class="input-field col s12">
+                  <input #name type="text" name="code" placeholder="Nombre del Escenario" required>
+                </div>
+                <div class="input-field col s12">
+                  <input #desc type="text" name="code" placeholder="Descripción del Escenario" required>
+                </div>
+                <div class="input-field col s12">
+                  <select #color>
+                    <option value="option" disabled selected>Seleccione su opción</option>
+                    <option value="#d32f2f" data-icon="../assets/colors/red.png"><span class="black-text">Rojo</span>
+                    </option>
+                    <option value="#c2185b" data-icon="../assets/colors/pink.png"><span class="black-text">Rosado</span>
+                    </option>
+                    <option value="#7b1fa2" data-icon="../assets/colors/purple.png"><span class="black-text">Morado</span>
+                    </option>
+                    <option value="#512da8" data-icon="../assets/colors/deep-purple.png"><span class="black-text">Morado Oscuro</span>
+                    </option>
+                    <option value="#303f9f" data-icon="../assets/colors/indigo.png"><span class="black-text">Indigo</span>
+                    </option>
+                    <option value="#1976d2" data-icon="../assets/colors/blue.png"><span class="black-text">Azul</span>
+                    </option>
+                    <option value="#0288d1" data-icon="../assets/colors/light-blue.png"><span class="black-text">Azul Claro</span>
+                    </option>
+                    <option value="#00796b" data-icon="../assets/colors/teal.png"><span
+                      class="black-text">Verde Azulado</span></option>
+                    <option value="#388e3c" data-icon="../assets/colors/green.png"><span class="black-text">Verde</span>
+                    </option>
+                    <option value="#689f38" data-icon="../assets/colors/light-green.png"><span class="black-text">Verde Claro</span>
+                    </option>
+                    <option value="#afb42b" data-icon="../assets/colors/lime.png"><span class="black-text">Lima</span>
+                    </option>
+                    <option value="#fbc02d" data-icon="../assets/colors/yellow.png"><span
+                      class="black-text">Amarillo</span></option>
+                    <option value="#ffa000" data-icon="../assets/colors/amber.png"><span class="black-text">Ámbar</span>
+                    </option>
+                    <option value="#f57c00" data-icon="../assets/colors/orange.png"><span
+                      class="black-text">Naranja</span></option>
+                    <option value="#e64a19" data-icon="../assets/colors/deep-orange.png"><span class="black-text">Naranja Oscuro</span>
+                    </option>
+                    <option value="#5d4037" data-icon="../assets/colors/brown.png"><span class="black-text">Marrón</span>
+                    </option>
+                    <option value="#616161" data-icon="../assets/colors/grey.png"><span class="black-text">Gris</span>
+                    </option>
+                    <option value="#455a64" data-icon="../assets/colors/blue-grey.png"><span class="black-text">Gris Oscuro</span>
+                    </option>
+
+                  </select>
+                  <label>Color</label>
+                </div>
+                <div class="input-field col s12">
+                  <div class="file-field input-field">
+                    <div class="btn yellow darken-2">
+                      <i class="material-icons">add_a_photo</i>
+                      <input type="file" #photoInput (change)="onPhotoSelected($event)">
                     </div>
-                    <div class="input-field col s12">
-                      <input #desc type="text" name="code" placeholder="Descripción del Escenario" required>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
                     </div>
-                    <div class="input-field col s12">
-                      <div class="file-field input-field">
-                        <div class="btn yellow darken-2">
-                          <i class="material-icons">add_a_photo</i>
-                          <input type="file" #photoInput (change)="onPhotoSelected($event)" >
-                        </div>
-                        <div class="file-path-wrapper">
-                          <input class="file-path validate" type="text" >
-                        </div>
-                        <img class="responsive-img" [src]=" photoSelected || 'assets/no-image.png'" alt="No Image" (click)="photoInput.click()">
-                      </div>
-                    </div>
-                    <div class="card-action">
-                      <div class="input-field col s5">
-                        <button class="btn yellow darken-2">Save</button>
-                      </div>
+                    <div class="center">
+                      <img class="responsive-img" [src]=" photoSelected || 'assets/no-image.png'" alt="No Image"
+                           (click)="photoInput.click()">
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+                <div class="center">
+                  <button  class=" btn yellow darken-2">Crear</button>
+                </div>
+              </form>
+
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
 
   </div>
+
 </div>
-
-
-
-
-
-
-
-
-
-

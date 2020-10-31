@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
-declare var M: any;
+import * as M from '../../../assets/materialize/js/materialize.min.js';
 
 @Component({
   selector: 'app-signin-user',
@@ -11,35 +10,31 @@ declare var M: any;
 })
 export class SigninUserComponent implements OnInit {
 
-  user = {
-    userType: '',
-    name: '',
-    dniType: '',
-    dni: '',
-    code: '',
-    phone: '',
-    email: '',
-  };
+  user = {email: ''};
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('token')){
+      localStorage.removeItem('token');
+    }
   }
 
   getUser(){
     const roles = this.authService.signInUser(this.user)
       .subscribe(res => {
-          localStorage.setItem('token', res.token);
-          M.toast({html:'Ingreso satisfactorio', classes: "green darken-2"});
-          this.router.navigate(['main']);
+          M.toast({html: res.message });
+          if (res.message === 'Ingreso satisfactorio'){
+            localStorage.setItem('token', res.token);
+            this.router.navigate(['main']);
+          }
         },
         error => {
           M.toast({html:'Usuario no existe', classes: "yellow darken-2"});
           this.authService.setCurrentEmail(this.user.email);
-
           this.router.navigate(['/signup']);
         });
   }

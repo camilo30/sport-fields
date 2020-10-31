@@ -15,7 +15,7 @@ const UserSchema = new Schema ({
     phone:      { type: String, required: true},
     email:      { type: String, required:true, unique:true },
     password:   { type: String},
-    roles:      [{type: Schema.Types.ObjectID, ref: 'Role'}]
+    role:       {type: Schema.Types.ObjectID, ref: 'Role'}
 },{
     timestamps: true
 });

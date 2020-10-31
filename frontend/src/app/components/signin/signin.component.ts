@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
-declare var M: any;
+import { User } from '../../models/user';
+import {ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as M from '../../../assets/materialize/js/materialize.min.js';
 
 @Component({
   selector: 'app-signin',
@@ -10,25 +11,29 @@ declare var M: any;
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-
-
-  user = {
-    userType: '',
-    name: '',
-    dniType: '',
-    dni: '',
-    code: '',
-    phone: '',
-    email: '',
-    password: ''
-  };
+  datos: FormGroup;
+  user: User;
 
   constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
+    if (localStorage.getItem('token')){
+      localStorage.removeItem('token');
+    }
+    this.crearFormulario();
+  }
+
+  crearFormulario(){
+    this.datos = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    }, {updateOn: 'change'});
   }
 
   getUser(){
@@ -38,15 +43,21 @@ export class SigninComponent implements OnInit {
   }
 
   signIn(){
-    this.authService.signIn(this.user)
+    this.authService.signIn(this.datos.value)
       .subscribe(
         res => {
-          console.log(res);
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/mainD']);
-        },
-        err => console.log(err)
+          this.user = res.userFound;
+            if (this.user.role.name === 'admin'){
+              this.router.navigate(['/mainA']);
+            } else if (this.user.role.name === 'director'){
+              this.router.navigate(['/mainD']);
+            } else {
+              this.router.navigate(['/mainI']);
+            }
+        },err => {
+          M.toast({html: err.error.message});
+        }
       );
   }
-
 }

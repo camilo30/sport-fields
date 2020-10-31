@@ -17,4 +17,17 @@ export class SchedulesService {
   getBookedSchedules(){
     return this.http.get<any>(this.URL_API + `/booked`);
   }
+
+  getDayFieldSchedules(fieldId, date){
+    return this.http.get(this.URL_API + `/dayField/${fieldId}/${date}`);
+  }
+
+  getFieldFreeSchedules(fieldId){
+    return this.http.get(this.URL_API + `/allField/${fieldId}`);
+  }
+
+  postSchedule(field: string, start: string, end: string){
+    const a = { field: field, start: start, end: end};
+    return this.http.post(this.URL_API, a);
+  }
 }

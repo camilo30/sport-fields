@@ -8,11 +8,7 @@
         <li><a routerLink="/"><img class="responsive-img"  src="../assets/logo-blanco2.png" alt=""></a></li>
         <li>Módulo Director</li></ul>
       <ul class="right hide-on-med-and-down">
-        <li><a routerLink="/dni">Id</a></li>
-        <li><a href="">Usuarios</a></li>
-        <li><a routerLink="/fields">Escenarios</a></li>
-        <li><a routerLink="/types">Tipos</a></li>
-        <li><a href="/signinAdmin">Ingreso admin</a></li>
+        <li><a routerLink="/signIn">Salir</a></li>
       </ul>
     </div>
   </div>
@@ -22,109 +18,135 @@
 <ul class="sidenav" id="mobile-demo">
   <li><div class="user-view">
     <div class="background">
-      <img src="#">
+      <img height="200px" src="../assets/uptc.jpg">
     </div>
-    <a href="#user"><img class="circle" src="#"></a>
-    <a href="#name"><span class="name"></span></a>
-    <a href="#email"><span class="email"></span></a>
+    <a href="#user"><img class="circle" src="../assets/default-user-image.png"></a>
+    <a href="#name"><span class="name white-text">{{user.name}}</span></a>
+    <a href="#email"><span class="email white-text">{{user.email}}</span></a>
   </div></li>
-  <li><a routerLink="/dni">Id</a></li>
-  <li><a href="">Usuarios</a></li>
-  <li><a routerLink="/fields">Escenarios</a></li>
-  <li><a href="">Horarios</a></li>
-  <li><a href="/signinAdmin">Ingreso admin</a></li>
+  <li><a routerLink="/signin">Salir</a></li>
 </ul>
 
-
-<!-- IMAGEN 1 -->
-<div class="row">
-  <div class="col l12 m12 s12">
-    <div class="">
-      <div class=""><img src="../assets/uptc.jpg"></div>
-    </div>
-  </div>
-</div>
-
-<!--CALENDARIO -->
-<div class="container">
+<!-- CALENDARIO Y RESERVAS -->
+<div class="container" (mouseover)="initTabs()" >
   <div class="row">
-    <div class="col m12 s12 l12">
+    <div class="col l12 m12 s12">
       <div class="card">
-        <div class="card-content ">
-          <span class="card-title yellow-text text-darken-2"><strong>Calendario</strong></span>
-          <full-calendar [options]="calendarOptions"></full-calendar>
+        <div class="card-content">
+          <span class="card-title yellow-text text-darken-2"><strong>Bienvenido</strong></span>
+
+
+          <div class="card-tabs">
+           <ul class="tabs tabs-fixed-width">
+             <li class="tab"><a href="#cal">Calendario</a></li>
+             <li class="tab"><a href="#res">Listado de Reservas</a></li>
+             <li class="tab"><a href="#his">Histórico de Reservas</a></li>
+           </ul>
+          </div>
+          <div class="card-content grey lighten-4">
+            <!--CALENDARIO -->
+            <div id="cal">
+             <div class="card">
+               <div class="card-content">
+                 <app-calendar></app-calendar>
+               </div>
+             </div>
+            </div>
+
+            <!--  RESERVAS -->
+            <div id="res">
+             <div class="card">
+               <div class="card-content">
+                 <app-booking></app-booking>
+               </div>
+             </div>
+
+            </div>
+
+            <!-- HISTORICO -->
+            <div id="his">
+              <div class="card">
+                <div class="card-content">
+                  <app-booking-history></app-booking-history>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col l12">
+              Seleccione el escenario que desea filtrar, por defecto se muestra información de todos los escenarios.
+              <p><em>Este filtro es necesario para generar horarios.</em></p>
+
+              <form [formGroup]="datos" action="">
+                <div *ngFor="let field of fields">
+                  <label>
+                    <input id="op1" class="with-gap " formControlName="field1" [value]="field._id" type="radio" />
+                    <span >{{field.name}}</span>
+                  </label>
+                </div>
+              </form>
+              <div class="center"><a class="btn yellow darken-2" (click)="borrarFiltro()">Borrar Filtro </a></div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- IMAGEN 1 -->
+<div class="row">
+  <div class="col l12 m12 s12">
+    <div class="parallax-container">
+      <div class="parallax"><img src="../assets/uptc4.jpg"></div>
+    </div>
+  </div>
+</div>
+
+<!--HORARIOS-->
+<div class="container">
+  <div class="row">
+    <div class="col l12 s12 m12">
+      <div class="card">
+        <div class="card-tabs">
+          <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a href="#bloq">Bloquear Horarios</a></li>
+            <li class="tab"><a href="#hor">Generar Horarios</a></li>
+          </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+          <!--BLOQUEAR HORARIOS -->
+          <div id="bloq">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Bloquear Horarios</span>
+                <app-new-booking></app-new-booking>
+              </div>
+            </div>
+          </div>
+
+          <!--BLOQUEAR HORARIOS -->
+          <div id="hor">
+            <div class="row">
+              <app-schedule></app-schedule>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- IMAGEN 2 -->
 <div class="row">
   <div class="col l12 m12 s12">
     <div class="parallax-container">
-      <div class="parallax"><img src="../assets/uptc5.jpg"></div>
-    </div>
-  </div>
-</div>
-
-<!--  RESERVAS -->
-<div class="container">
-  <div class="row">
-    <div class="col m12 s12 l12">
-      <div class="card">
-        <div class="card-content ">
-          <span class="card-title yellow-text text-darken-2"><strong>Reservas</strong></span>
-          <ng-container *ngIf="bookings.length > 0; else noReservas">
-            <table class="responsive-table">
-              <thead class="center-align">
-              <th>Usuario</th>
-              <th>Escenario</th>
-              <th>Fecha</th>
-              <th>Inicio</th>
-              <th>Fin</th>
-              <th>Estado</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-              </thead>
-              <tbody *ngFor="let ub of bookings">
-              <tr>
-                <td>{{ub.user.email }}</td>
-                <td>{{ub.schedule.field.name }}</td>
-                <td>{{ub.schedule.start | date}}</td>
-                <td>{{ub.schedule.start | date:'shortTime':'GMT'}}</td>
-                <td>{{ub.schedule.end | date:'shortTime':'GMT'}}</td>
-
-                <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
-                  <td ><span class="new badge teal darken-2" data-badge-caption="Solicitada"></span></td>
-                  <td>{{ub.bkgStatus.desc}}</td>
-                  <td>
-                    <a class="tooltipped btn red darken-2" data-position="top" data-tooltip="aa" (click)="CancelBooking(ub._id)"><i class="material-icons">cancel</i></a>
-                  </td>
-                </ng-container>
-
-                <ng-container *ngIf="ub.bkgStatus.name === 'Cancelada'">
-                  <td><span class="new badge red darken-2" data-badge-caption="Cancelada"></span></td>
-                  <td>{{ub.bkgStatus.desc}}</td>
-                </ng-container>
-              </tr>
-              </tbody>
-            </table>
-          </ng-container>
-          <ng-template #noReservas>
-            No existen reservas.
-          </ng-template>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- IMAGEN 3 -->
-<div class="row">
-  <div class="col l12 m12 s12">
-    <div class="parallax-container">
-      <div class="parallax"><img src="../assets/uptc4.jpg"></div>
+      <div class="parallax"><img src="../assets/uptc6.jpg"></div>
     </div>
   </div>
 </div>
@@ -136,34 +158,7 @@
   </div>
 </div>
 
-<!-- IMAGEN 4 -->
-<div class="row">
-  <div class="col l12 m12 s12">
-    <div class="parallax-container">
-      <div class="parallax"><img src="../assets/uptc.jpg"></div>
-    </div>
-  </div>
-</div>
 
-<!-- DISPONIBILIDAD -->
-<div class="container">
-  <div class="row">
-    <app-schedule></app-schedule>
-  </div>
-</div>
 
-<!-- IMAGEN 5 -->
-<div class="row">
-  <div class="col l12 m12 s12">
-    <div class="parallax-container">
-      <div class="parallax"><img src="../assets/uptc.jpg"></div>
-    </div>
-  </div>
-</div>
 
-<!-- TIPOS DE DATOS -->
-<div class="container">
-  <div class="row">
-    <app-type-of></app-type-of>
-  </div>
-</div>
+

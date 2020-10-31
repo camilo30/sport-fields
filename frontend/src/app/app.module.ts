@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin
+import listGridPlugin from '@fullcalendar/list'; // a plugin
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,10 +31,15 @@ import { MainDirectorComponent } from './components/main-director/main-director.
 import { MainAdminComponent } from './components/main-admin/main-admin.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { MainInstructorComponent } from './components/main-instructor/main-instructor.component';
+import { NewBookingComponent } from './components/new-booking/new-booking.component';
+import { BookingHistoryComponent } from './components/booking-history/booking-history.component';
+
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
-  timeGridPlugin
+  timeGridPlugin,
+  listGridPlugin
 ]);
 
 @NgModule({
@@ -51,7 +57,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MainDirectorComponent,
     MainAdminComponent,
     CalendarComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    MainInstructorComponent,
+    NewBookingComponent,
+    BookingHistoryComponent
   ],
   imports: [
     BrowserModule,

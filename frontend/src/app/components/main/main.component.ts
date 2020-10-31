@@ -8,10 +8,9 @@ import { Booking } from '../../models/booking';
 import {ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import 'nouislider/distribute/nouislider.css';
 import {Field} from '../../models/field';
-declare var M: any;
-
-
-
+import * as M from '../../../assets/materialize/js/materialize.min.js';
+import {delay} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -22,7 +21,10 @@ declare var M: any;
 export class MainComponent implements OnInit, AfterViewInit{
   user: User;
   fields: Field[];
+  field: Field;
   datos: FormGroup;
+  hrefs = ['one', 'two', 'three', 'four', 'five'];
+  options: {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,24 +42,28 @@ export class MainComponent implements OnInit, AfterViewInit{
       // console.log(this.datos.get('field1').value);
       const f = this.fieldService.getField(this.datos.get('field1').value).subscribe(res => {
         this.fieldService.setSelectedField(res);
-        // console.log(res);
+        // Obtener escenario actual
+        this.fieldService.getSelectedField().subscribe(res => {
+          this.field = res;
+        });
       });
     });
 
   }
 
+
   ngOnInit(): void {
     this.getUser();
     this.getFields();
-
   }
 
- ngAfterViewInit() {
-   document.addEventListener('DOMContentLoaded', function() {
-     var elems = document.querySelectorAll('.parallax');
-     var instances = M.Parallax.init(elems);
+  ngAfterViewInit(): void {
+     let elems = document.querySelectorAll('.parallax');
+     let instances = M.Parallax.init(elems);
 
-   });
+    var elems2 = document.querySelectorAll('.datepicker');
+    var instances2 = M.Datepicker.init(elems2);
+
 
  }
 
@@ -68,7 +74,6 @@ export class MainComponent implements OnInit, AfterViewInit{
     });
 
     this.authService.selectedUser$.subscribe(res => {
-      console.log('user: ', res);
       this.user = res;
     });
   }
@@ -77,6 +82,14 @@ export class MainComponent implements OnInit, AfterViewInit{
     this.fieldService.getFields().subscribe(res => {
       this.fields = res;
     });
+  }
+
+  loadTabs(){
+    var el = document.querySelectorAll('.tabs');
+    var instance = M.Tabs.init(el);
+
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
   }
 
 

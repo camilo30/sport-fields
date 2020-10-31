@@ -1,3 +1,4 @@
+<!--BARRA SUPERIOR-->
 <nav>
   <div class="nav-wrapper grey darken-4">
     <div class="container">
@@ -12,70 +13,151 @@
     </div>
   </div>
 </nav>
-
+<!--BARRA MOVIL-->
 <ul class="sidenav" id="mobile-demo">
   <li><a href="/signin">Inicio</a></li>
 </ul>
 
+<ng-container *ngIf="loggedUser; else noUser">
+  <ng-container *ngIf="loggedUser.role.name === 'admin'">
 
-<div class="row">
-  <div class="col l6 offset-l3 s12 ">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">El usuario no existe en el sistema, por favor registrarse:</span>
+    <div class="row">
+      <div class="col l6 offset-l3 s12 ">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title yellow-text text-darken-2"><strong>Registrar Nuevo Usuario:</strong></span>
 
-        <form [formGroup]="datos">
-          <div class="row">
+            <form [formGroup]="datos">
+              <div class="row">
 
-            <div class="input-field">
-              <input id="email" type="text" formControlName="email" placeholder="Correo electrónico" required disabled>
-            </div>
+                <div class="input-field">
+                  <input type="text" formControlName="email" placeholder="Correo electrónico" required>
+                </div>
 
-            <div class="input-field">
-              <input id="name" type="text" name="name" formControlName="name" placeholder="Nombre" required autofocus>
-            </div>
+                <div class="input-field">
+                  <input type="password" formControlName="password" placeholder="Contraseña" required>
+                </div>
 
-            <label>Tipo de identificación</label>
-            <div class="input-field">
-              <div *ngFor="let dt of dniTypes">
-                <label>
-                  <input class="with-gap" formControlName="dniType" [value]="dt.desc" type="radio"/>
-                  <span>{{dt.desc}}</span>
-                </label>
+                <div class="input-field">
+                  <input type="text" name="name" formControlName="name" placeholder="Nombre" required autofocus>
+                </div>
+
+                <label>Tipo de identificación</label>
+                <div class="input-field">
+                  <div *ngFor="let dt of dniTypes">
+                    <label>
+                      <input class="with-gap" formControlName="dniType" [value]="dt.desc" type="radio"/>
+                      <span>{{dt.desc}}</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="input-field">
+                  <input type="text" name="dni" formControlName="dni" placeholder="Número de identificación" required>
+                </div>
+
+                <div class="input-field">
+                  <input type="text" name="phone" formControlName="phone" placeholder="Teléfono" required>
+                </div>
+
+                <div class="input-field">
+                    <input type="text" name="code" formControlName="code" placeholder="Código" required>
+                  </div>
+
+                  <label>Tipo de usuario</label>
+                  <div class="input-field">
+                    <div *ngFor="let ut of userTypes">
+                      <label>
+                        <input class="with-gap" formControlName="userType" [value]="ut.desc" type="radio" />
+                        <span>{{ut.desc}} </span>
+                      </label>
+                    </div>
+                  </div>
+
+                <label>Rol</label>
+                <div class="input-field">
+                  <div *ngFor="let role of roles">
+                    <label>
+                      <input class="with-gap" formControlName="role" [value]="role.name" type="radio" />
+                      <span>{{role.name}} </span>
+                    </label>
+                  </div>
+                </div>
+
+
+                <div class="input-field center">
+                  <button type="submit" class="btn yellow darken-2" [disabled]="datos.invalid" (click)="signUp()">Registrar</button>
+                </div>
               </div>
-            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="input-field">
-              <input type="text" name="dni" formControlName="dni" placeholder="Número de identificación" required>
-            </div>
+  </ng-container>
+</ng-container>
 
-            <div class="input-field">
-              <input type="text" name="phone" formControlName="phone" placeholder="Teléfono" required>
-            </div>
+<ng-template #noUser>
+  <div class="row">
+    <div class="col l6 offset-l3 s12 ">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">El usuario no existe en el sistema, por favor registrarse:</span>
 
-            <ng-container *ngIf="(this.user.email).includes('uptc.edu.co')">
+          <form [formGroup]="datos">
+            <div class="row">
+
               <div class="input-field">
-                <input type="text" name="code" formControlName="code" placeholder="Código" required>
+                <input id="email" type="text" formControlName="email" placeholder="Correo electrónico" required>
               </div>
 
-              <label>Tipo de usuario</label>
               <div class="input-field">
-                <div *ngFor="let ut of userTypes">
+                <input id="name" type="text" name="name" formControlName="name" placeholder="Nombre" required autofocus>
+              </div>
+
+              <label>Tipo de identificación</label>
+              <div class="input-field">
+                <div *ngFor="let dt of dniTypes">
                   <label>
-                    <input id="op1" class="with-gap" formControlName="userType" [value]="ut.desc" type="radio" />
-                    <span>{{ut.desc}} </span>
+                    <input class="with-gap" formControlName="dniType" [value]="dt.desc" type="radio"/>
+                    <span>{{dt.desc}}</span>
                   </label>
                 </div>
               </div>
-            </ng-container>
 
+              <div class="input-field">
+                <input type="text" name="dni" formControlName="dni" placeholder="Número de identificación" required>
+              </div>
 
-            <div class="input-field center">
-              <button type="submit" class="btn yellow darken-2" [disabled]="datos.invalid" (click)="signUp()">Registrarse</button>
+              <div class="input-field">
+                <input type="text" name="phone" formControlName="phone" placeholder="Teléfono" required>
+              </div>
+
+              <ng-container *ngIf="(this.user.email).includes('uptc.edu.co')">
+                <div class="input-field">
+                  <input type="text" name="code" formControlName="code" placeholder="Código" required>
+                </div>
+
+                <label>Tipo de usuario</label>
+                <div class="input-field">
+                  <div *ngFor="let ut of userTypes">
+                    <label>
+                      <input id="op1" class="with-gap" formControlName="userType" [value]="ut.desc" type="radio" />
+                      <span>{{ut.desc}} </span>
+                    </label>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="input-field center">
+                <button type="submit" class="btn yellow darken-2" [disabled]="datos.invalid" (click)="signUp()">Registrarse</button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+

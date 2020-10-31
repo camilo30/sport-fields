@@ -3,6 +3,7 @@ const bkgType = require ('../models/bkgtype');
 const dniType = require ('../models/dnitype');
 const atchType = require ('../models/atchType');
 const bkgStatus = require ('../models/bkgStatus');
+const role = require ('../models/role');
 
 const typesController = {};
 
@@ -85,6 +86,12 @@ typesController.getAllBkgStatus = async (req,res) => {
 typesController.getBkgStatus = async (req,res) => {
     const bs = await bkgStatus.findById(req.params.id);
     res.json(bs);
+}
+
+// Controladores para roles
+typesController.getRoles = async (req, res) => {
+    const roles = await role.find({name: {$ne : 'admin'}});
+    res.json(roles);
 }
 
 

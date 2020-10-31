@@ -28,6 +28,8 @@ router.delete('/atch/:id', type.deleteAtchType);
 router.get('/bkgstatus', type.getAllBkgStatus);
 router.get('/bkgstatus/:id', type.getBkgStatus);
 
+// Rutas roles
+router.get('/roles', type.getRoles);
 
 module.exports = router;
 

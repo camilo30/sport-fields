@@ -25,16 +25,16 @@
       <div class="card">
         <div class="card-content">
           <span class="card-title">Módulo Administrador</span>
-          <form (ngSubmit)="getUser()">
+          <form [formGroup]="datos">
             <div class="row">
               <div class="input-field">
-                <input type="text" name="email" [(ngModel)]="user.email" placeholder="Correo electrónico" required autofocus>
+                <input type="text" name="email" formControlName="email" placeholder="Correo electrónico" required autofocus>
               </div>
               <div class="input-field">
-                <input type="password" name="password" [(ngModel)]="user.password" placeholder="Contraseña" required>
+                <input type="password" name="password" formControlName="password" placeholder="Contraseña" required>
               </div>
               <div class="input-field center">
-                <button type="submit" class="btn yellow darken-2">Aceptar</button>
+                <button type="submit" class="btn yellow darken-2" [disabled]="datos.invalid" (click)="signIn()">Aceptar</button>
               </div>
             </div>
           </form>

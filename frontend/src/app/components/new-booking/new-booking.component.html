@@ -1,0 +1,149 @@
+<!-- NUEVA RESERVA -->
+
+<ng-container *ngIf="field">
+  <img [src]="'http://localhost:3000/'+field.imagePath" height="100px" width="150px" alt="">
+</ng-container>
+
+<div class="input-field">
+  <input #date (click)="load(date)" (change)="load(date)" type="text" class="datepicker" placeholder="Fecha" >
+</div>
+
+<div class="row">
+  <form [formGroup]="datos" (ngSubmit)="DoBooking()">
+
+    <div *ngFor="let schedule of schedules; let i=index">
+      <label>
+        <input  class="filled-in" [value]="schedule._id" type="checkbox" (change)="onCheckChange($event)"/>
+        <span >{{schedule.start | date: 'shortTime'}} - {{schedule.end | date: 'shortTime'}}</span>
+      </label>
+    </div>
+
+   <ng-container *ngIf="user">
+
+     <ng-container *ngIf="user.role.name === 'director'">
+       Tipo de Reserva
+       <label >
+         <input name="bkgType" formControlName="bkgType" value="E" type="radio">
+         <span>Entrenamiento</span>
+       </label>
+       <label >
+         <input name="bkgType" formControlName="bkgType" value="U" type="radio">
+         <span>Uso institucional</span>
+       </label>
+       <p></p>
+
+     </ng-container>
+
+     <ng-container *ngIf="user.role.name === 'user'">
+
+      <p class="center"><strong>Cargar archivos:</strong></p>
+       <p>Formatos:</p>
+       <p><a class="tooltipped" data-position="top" data-tooltip="Descargar" (mouseover)="initTM()" href="http://localhost:3000/public/files/formatos/5012 - Formato de solicitud.XLS">Solicitud de préstamo</a></p>
+       <p><a class="tooltipped" data-position="top" data-tooltip="Descargar" (mouseover)="initTM()" href="http://localhost:3000/public/files/formatos/Listado de aistentes.DOCX">Listado de asistentes</a></p>
+
+       <ng-container *ngIf="user.userType.internal === false">
+         <div class="row"><br/>
+           <a class="modal-trigger tooltipped" href="#modal1" data-position="top" data-tooltip="Ver requisitos especiales" (mouseover)="initTM()"><span class="left new badge teal darken-2" data-badge-caption="Requisitos Especiales"></span></a>
+           <a class="modal-trigger tooltipped" href="#modal2" data-position="top" data-tooltip="Ver tarifas" (mouseover)="initTM()"><span class="left new badge orange darken-2" data-badge-caption="Tarifas"></span></a>
+         </div>
+
+         <div id="modal1" class="modal">
+           <div class="modal-content">
+             <h4 class="center yellow-text text-darken-2"><strong>Requisitos especiales</strong></h4>
+
+             <ul class="collection with-header">
+               <li class="collection-header"><h5>Empresas Públicas o privadas:</h5></li>
+               <li class="collection-item">Carné de identificación de la empresa, por usuario.</li>
+               <li class="collection-item">Constancia de afiliación a ARL y al SGSSS, por usuario.</li>
+               <li class="collection-item">Registro de asistentes con número de identificación y autorización de movilización.</li>
+               <li class="collection-item">Un sistema de Brigadistas y ambulancia</li>
+             </ul>
+             <ul class="collection with-header">
+               <li class="collection-header"><h5>Colegios y universidades</h5></li>
+               <li class="collection-item">Carné estudiantil, por usuario.</li>
+               <li class="collection-item">Registro de asistentes con número de identificación y afiliación a SGSSS, así como la autorización de movilización.</li>
+               <li class="collection-item">Seguro o póliza estudiantil con constancia de cubrimiento de actividades extracurriculares académicas.</li>
+               <li class="collection-item">Docentes o instructores, afiliación a ARL.</li>
+             </ul>
+             <ul class="collection with-header">
+               <li class="collection-header"><h5> Escuelas de Formación deportiva</h5></li>
+               <li class="collection-item">Acto de formación de la escuela o club.</li>
+               <li class="collection-item">Registro de asistentes con número de identificación y afiliación a SGSSS, así como la autorización de movilización de los padres.</li>
+               <li class="collection-item">Seguro o póliza con constancia de cubrimiento de actividades; o en su defecto con Seguro Grupal.</li>
+               <li class="collection-item">Docentes o instructores, afiliación a ARL.</li>
+             </ul>
+             <ul class="collection with-header">
+               <li class="collection-header"><h5>Particulares</h5></li>
+               <li class="collection-item">Un sistema de Brigadistas y ambulancia.</li>
+               <li class="collection-item">Registro de asistentes con número de identificación.</li>
+               <li class="collection-item">Una póliza de Seguro Grupal.</li>
+               <li class="collection-item">Constancia de afiliación al SGSSS</li>
+             </ul>
+           </div>
+         </div>
+
+         <div id="modal2" class="modal">
+           <div class="modal-content">
+             <h4 class="center yellow-text text-darken-2"><strong>Tarifas</strong></h4>
+             <table class="striped">
+               <thead>
+               <th><strong>CONCEPTO</strong></th>
+               <th><strong>HORAS</strong></th>
+               <th><strong>SMLDV*</strong></th>
+               </thead>
+               <tbody>
+               <tr><td>CANCHA FUTBOL DIURNO</td><td>2</td><td>4</td></tr>
+               <tr><td>CANCHA FUTBOL NOCTURNO</td><td>2</td><td>8</td></tr>
+               <tr><td>COLISEO UNIVERSITARIO DIURNO</td><td>1</td><td>1.5</td></tr>
+               <tr><td>COLISEO UNIVERSITARIO NOCTURNO</td><td>1</td><td>2.5</td></tr>
+               <tr><td>PRESTAMO CANCHA TENIS DE CAMPO DÍA</td><td>1</td><td>0.4</td></tr>
+               <tr><td>PRÉSTAMO CANCHA TENIS DE CAMPO NOCHE</td><td>1</td><td>0.6</td></tr>
+               <tr><td>CANCHA DE FUTBOL SALA FIFA DIURNO</td><td>1</td><td>1</td></tr>
+               <tr><td>CANCHA DE FUTBOL SALA FIFA NOCTURNO</td><td>1</td><td>2.5</td></tr>
+               <tr><td>CANCHA DE VOLEIBOL ARENA</td><td>1</td><td>1</td></tr>
+               </tbody>
+             </table>
+             <em class="right">*Salarios Mínimos Legales Diarios Vigentes</em><br/><br/>
+             Una vez aprobada la reserva realizar consignación en la cuenta XXXXXX del banco XXXX.
+
+           </div>
+         </div>
+       </ng-container>
+
+           <div class="row">
+           <div class="col l6 m6 s12">
+             <div class="file-field input-field">
+               <div class="file-field input-field">
+                 <div class="btn grey darken-2">
+                   <span>Solicitud</span>
+                   <input type="file" (change)="onFileChange($event)">
+                 </div>
+                 <div class="file-path-wrapper">
+                   <input class="file-path validate" type="text">
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           <div class="col l6 m6 s12">
+             <div class="file-field input-field">
+               <div class="file-field input-field">
+                 <div class="btn grey darken-2">
+                   <span>Asistentes</span>
+                   <input type="file" (change)="onFileChange2($event)">
+                 </div>
+                 <div class="file-path-wrapper">
+                   <input class="file-path validate" type="text">
+                 </div>
+               </div>
+             </div>
+           </div>
+           </div>
+
+     </ng-container>
+
+   </ng-container>
+
+      <div class="center"><button type="submit" class="btn yellow darken-2">Solicitar</button></div>
+  </form>
+</div>

@@ -9,5 +9,6 @@ export interface User {
   code: string;
   phone: string;
   email: string;
-  roles: [Role];
+  password: string;
+  role: Role;
 }

@@ -1,0 +1,163 @@
+
+<ng-container *ngIf="bookings.length > 0; else noReservas">
+
+  <!-- DIRECTOR -->
+  <ng-container *ngIf="user.role.name === 'director'; else hnD">
+
+    <!-- PANTALLA GRANDE - TABLA  -->
+    <table class="hide-on-med-and-down">
+      <thead class="center-align">
+      <th>Usuario</th><th>Escenario</th><th>Fecha</th><th>Inicio</th><th>Fin</th><th>Estado</th><th>Motivo de rechazo</th>
+      </thead>
+      <tbody *ngFor="let ub of bookings">
+      <tr>
+        <td>{{ub.user.email }}</td>
+        <td><font color="{{ub.schedule[0].field.color}}">{{ub.schedule[0].field.name }}</font></td>
+        <td>{{ub.schedule[0].start | date}}</td>
+        <td>{{ub.schedule[0].start | date:'shortTime'}}</td>
+        <td>{{ub.schedule[(ub.schedule).length-1].end | date:'shortTime'}}</td>
+
+        <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
+          <td>
+            <span class="tooltipped new badge teal darken-2" data-position="top" data-tooltip="Reserva solicitada, el administrador validará disponibilidad." data-badge-caption="Solicitada" (mouseover)="initTooltip()"></span>
+          </td>
+        </ng-container>
+
+        <ng-container *ngIf="ub.bkgStatus.name === 'Aprobada'">
+          <td><span class="tooltipped new badge green darken-2" data-position="top" data-tooltip="Documentación válida, reserva aprobada." data-badge-caption="Aprobada" (mouseover)="initTooltip()"></span></td>
+        </ng-container>
+
+        <ng-container *ngIf="ub.bkgStatus.name === 'Cancelada'">
+          <td><span class="tooltipped new badge red darken-2" data-position="top" data-tooltip="Reserva cancelada por el usuario." data-badge-caption="Cancelada" (mouseover)="initTooltip()"></span></td>
+        </ng-container>
+
+        <ng-container *ngIf="ub.bkgStatus.name === 'Rechazada'">
+          <td><span class="tooltipped new badge purple darken-2" data-position="top" data-tooltip="Reserva cancelada por el usuario." data-badge-caption="Rechazada" (mouseover)="initTooltip()"></span></td>
+          <td>{{ub.comment}}</td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- PANTALLA MED Y PEQ - TARJETAS  -->
+    <div class="hide-on-large-only" >
+      <div *ngFor="let ub of bookings">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><font color="{{ub.schedule[0].field.color}}"><strong>{{ub.schedule[0].field.name}}</strong></font></span>
+            {{ub.user.email}}
+            <p>{{ub.schedule[0].start | date}}</p>
+            {{ub.schedule[0].start | date:'shortTime'}} -  {{ub.schedule[(ub.schedule).length-1].end | date:'shortTime'}}
+
+            <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
+              <span class="new badge teal darken-2" data-badge-caption="Solicitada"></span>
+            </ng-container>
+
+            <ng-container *ngIf="ub.bkgStatus.name === 'Aprobada'">
+              <span class="new badge green darken-2" data-badge-caption="Aprobada"></span>
+            </ng-container>
+
+            <ng-container *ngIf="ub.bkgStatus.name === 'Cancelada'">
+              <span class="new badge red darken-2" data-badge-caption="Cancelada"></span>
+            </ng-container>
+
+            <ng-container *ngIf="ub.bkgStatus.name === 'Rechazada'">
+              <span class="new badge purple darken-2" data-badge-caption="Rechazada"></span>
+              <p> <strong>Motivo:</strong> {{ub.comment}}</p>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- USUARIO - INSTRUCTOR -->
+  <ng-template #hnD>
+
+    <!-- PANTALLA GRANDE - TABLA  -->
+    <table class="hide-on-med-and-down">
+      <thead class="center-align">
+      <th>Escenario</th>
+      <th>Fecha</th>
+      <th>Inicio</th>
+      <th>Fin</th>
+      <th>Estado</th>
+      <th>Motivo de rechazo</th>
+      </thead>
+      <tbody *ngFor="let booking of bookings">
+      <tr>
+        <td>{{booking.schedule[0].field.name}}</td>
+        <td>{{booking.schedule[0].start | date}}</td>
+        <td>{{booking.schedule[0].start| date:'shortTime'}}</td>
+        <td>{{booking.schedule[(booking.schedule.length)-1].end | date:'shortTime'}}</td>
+
+
+        <ng-container *ngIf="booking.bkgStatus.name === 'Solicitada'">
+          <td>
+            <span class="tooltipped new badge teal darken-2" data-position="top" data-tooltip="Reserva solicitada, el administrador validará disponibilidad." data-badge-caption="Solicitada" (mouseover)="initTooltip()"></span>
+          </td><td></td>
+        </ng-container>
+
+        <ng-container *ngIf="booking.bkgStatus.name === 'Aprobada'">
+          <td><span class="tooltipped new badge green darken-2" data-position="top" data-tooltip="Documentación válida, reserva aprobada." data-badge-caption="Aprobada" (mouseover)="initTooltip()"></span></td>
+          <td></td>
+        </ng-container>
+
+        <ng-container *ngIf="booking.bkgStatus.name === 'Cancelada'">
+          <td><span class="tooltipped new badge red darken-2" data-position="top" data-tooltip="Reserva cancelada por el usuario." data-badge-caption="Cancelada" (mouseover)="initTooltip()"></span></td>
+          <td></td>
+        </ng-container>
+
+        <ng-container *ngIf="booking.bkgStatus.name === 'Rechazada'">
+          <td><span class="tooltipped new badge purple darken-2" data-position="top" data-tooltip="No existe disponibilidad de horario o la documentación adjunta no es válida o está incompleta." data-badge-caption="Rechazada" (mouseover)="initTooltip()"></span></td>
+          <td>{{booking.comment}}</td>
+        </ng-container>
+      </tr>
+
+      </tbody>
+    </table>
+
+    <!-- PANTALLA MED Y PEQ - TARJETAS  -->
+    <div class="hide-on-large-only" >
+      <div *ngFor="let booking of bookings">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><strong>{{booking.schedule[0].field.name}}</strong></span>
+            <p>{{booking.schedule[0].start | date}}</p>
+            {{booking.schedule[0].start | date:'shortTime'}} -  {{booking.schedule[(booking.schedule).length-1].end | date:'shortTime'}}
+
+            <ng-container *ngIf="booking.bkgStatus.name === 'Solicitada'">
+              <span class="new badge teal darken-2" data-badge-caption="Solicitada"></span>
+            </ng-container>
+
+            <ng-container *ngIf="booking.bkgStatus.name === 'Aprobada'">
+              <span class="new badge green darken-2" data-badge-caption="Aprobada"></span>
+            </ng-container>
+
+            <ng-container *ngIf="booking.bkgStatus.name === 'Cancelada'">
+              <span class="new badge red darken-2" data-badge-caption="Cancelada" ></span>
+            </ng-container>
+
+            <ng-container *ngIf="booking.bkgStatus.name === 'Rechazada'">
+              <span class="new badge purple darken-2" data-badge-caption="Rechazada"></span>
+              <p> <strong>Motivo:</strong> {{booking.comment}}</p>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </ng-template>
+
+</ng-container>
+
+<ng-template #noReservas>
+  No existen reservas.
+</ng-template>
+
+
+

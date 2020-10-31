@@ -10,23 +10,22 @@ import { AuthGuard } from './auth.guard';
 import {TypeOfComponent} from './components/type-of/type-of.component';
 import {SigninUserComponent} from './components/signin-user/signin-user.component';
 import { MainDirectorComponent } from './components/main-director/main-director.component';
+import {MainAdminComponent} from "./components/main-admin/main-admin.component";
+import {MainInstructorComponent} from "./components/main-instructor/main-instructor.component";
 
 const routes: Routes = [
-  // Solicitar login: canActivate: [AuthGuard]
+  // Solicitar login: canActivate: [AuthGuard], data: roles
 
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
 
   { path: 'signin', component: SigninUserComponent},
-  { path: 'main', component: MainComponent  },
+  { path: 'main', component: MainComponent, canActivate: [AuthGuard], data: {role: 'user'} },
 
   { path: 'signinAdmin', component: SigninComponent },
-  { path: 'mainD', component: MainDirectorComponent },
-
-  { path: 'fields', component: FieldsComponent },
-  { path: 'dni', component:  DnisComponent },
-  { path: 'fields/:id', component: FieldPreviewComponent },
-  { path: 'types', component: TypeOfComponent }
+  { path: 'mainD', component: MainDirectorComponent,  canActivate: [AuthGuard], data: {role: 'director'} },
+  { path: 'mainA', component: MainAdminComponent, canActivate: [AuthGuard], data: {role: 'admin'} },
+  { path: 'mainI', component: MainInstructorComponent, canActivate: [AuthGuard], data: {role: 'instructor'}},
 
 ];
 

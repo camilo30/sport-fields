@@ -27,12 +27,13 @@ export class FieldService {
     return this.http.get<Field>(this.URL_API + `/${id}`);
   }
 
-  postField(name: string, desc: string, photo: File){
+  postField(name: string, desc: string, color: string, photo: File){
     const fd = new FormData();
     fd.append('name',name);
     fd.append('desc',desc);
-    fd.append('image',photo)
-    return this.http.post(this.URL_API,fd);
+    fd.append('color', color);
+    fd.append('image',photo);
+    return this.http.post(this.URL_API, fd);
   }
 
   deleteField(id: string){

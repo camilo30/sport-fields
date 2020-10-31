@@ -13,6 +13,7 @@ fieldController.createField = async (req,res) => {
     const field = new Field({
         name: req.body.name,
         desc: req.body.desc,
+        color: req.body.color,
         imagePath: req.file.path
     });
     await field.save();
@@ -32,6 +33,7 @@ fieldController.editField = async (req,res) => {
     const field = {
         name : req.body.name,
         desc: req.body.desc,
+        color: req.body.color
     }
 
     const updated = await Field.findByIdAndUpdate(id, {$set: field}, {new:true});
@@ -41,11 +43,16 @@ fieldController.editField = async (req,res) => {
 
 
 fieldController.deleteField = async (req,res) => {
-    const field = await Field.findByIdAndRemove(req.params.id);
-    if (field){
-        fs.unlink(path.resolve(field.imagePath))
-    }
-    res.json({status:'Escenario eliminado',field});
+        const field = await Field.findByIdAndRemove(req.params.id);
+        if (field){
+            fs.unlink(path.resolve(field.imagePath))
+        }
+        res.json({status:'Escenario eliminado',field});
+
+
+
+
+
 }
 
 module.exports = fieldController;

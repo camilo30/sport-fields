@@ -1,45 +1,43 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { FieldService } from '../../services/field.service'
+import { Component, OnInit} from '@angular/core';
+import { FieldService } from '../../services/field.service';
+import { SchedulesService } from '../../services/schedules.service';
 import { Field } from '../../models/field';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {NgForm, NgModel} from '@angular/forms';
+import * as M from '../../../assets/materialize/js/materialize.min.js';
+import {Schedule} from "../../models/Schedule";
 
 interface HtmlInputEvent extends Event{
   target: HTMLInputElement & EventTarget;
 }
-
-declare var M: any;
 
 @Component({
   selector: 'app-fields',
   templateUrl: './fields.component.html',
   styleUrls: ['./fields.component.css']
 })
-export class FieldsComponent implements OnInit, OnChanges {
+export class FieldsComponent implements OnInit {
 
   fields = [];
   file: File;
+  schedules: any;
   photoSelected: string | ArrayBuffer;
 
 
-  constructor(private fieldService: FieldService, private sanitizer:DomSanitizer, private router: Router) { }
+  constructor(
+    private fieldService: FieldService,
+    private scheduleService: SchedulesService,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getFiedls();
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const elems = document.querySelectorAll('.modal');
-      const instances = M.Modal.init(elems );
-    });
   }
 
-  OnChanges(){
 
-  }
-
-  getFiedls(){
+  getFiedls(): void{
     this.fieldService.getFields()
       .subscribe(
         res => {
@@ -48,33 +46,50 @@ export class FieldsComponent implements OnInit, OnChanges {
         err => console.log(err));
   }
 
-    //metodos 1
 
-  addField(name: HTMLInputElement, desc: HTMLInputElement){
-     this.fieldService.postField(name.value, desc.value, this.file)
-       .subscribe(res => console.log(res), err => console.log(err));
-     M.toast({html: 'Escenario creado'});
-     this.getFiedls();
-     console.log(this.fields);
-  }
+  addField(name: HTMLInputElement, desc: HTMLInputElement, color: HTMLSelectElement): void{
+    this.fieldService.postField(name.value, desc.value, color.value, this.file).subscribe(res => {
+      name.value = '';
+      desc.value = '';
+      color.selectedIndex = 0;
+      this.file = null;
+      M.toast({html: 'Escenario creado'});
+      window.location.reload();
 
-  deleteField(id: string){
-    if(confirm("Está seguro de eliminar el escenario?")){
-      this.fieldService.deleteField(id)
-        .subscribe(
-          res => {
-            console.log(res);
-            M.toast({html: "Escenario eliminado"})
-            this.ngOnInit();
-          },
-          err => console.log(err)
-        )
-    }
+
+    }, err => console.log(err));
+
 
   }
 
-  onPhotoSelected(event: HtmlInputEvent){
-   if(event.target.files && event.target.files[0]){
+
+
+  deleteField(id: string): void{
+    this.scheduleService.getFieldFreeSchedules(id).subscribe(res => {
+      this.schedules = res;
+      if (this.schedules.length > 0){
+      M.toast({html: 'No se puede eliminar el escenario, tiene horarios asignados.'});
+      } else {
+
+        if (confirm('Está seguro de eliminar el escenario?')){
+          console.log('el id: ',id)
+          this.fieldService.deleteField(id).subscribe(res => {
+                console.log(res);
+                M.toast({html: 'Escenario eliminado'});
+                this.ngOnInit();
+                window.location.reload();
+              },
+              err => console.log(err)
+            );
+        }
+      }
+    });
+
+
+  }
+
+  onPhotoSelected(event: HtmlInputEvent): void{
+   if (event.target.files && event.target.files[0]){
       this.file = <File>event.target.files[0];
       //image preview
      const reader = new FileReader();

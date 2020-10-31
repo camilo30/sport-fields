@@ -7,7 +7,12 @@ const User = require('./models/user');
 const {verifyToken, isDirector} =require('./middlewares/authJwt');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+
+
+
 const app = express();
+
+
 
 const { mongoose } = require('./database');
 
@@ -32,11 +37,16 @@ app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/', require('./routes/user.routes'));
 
 
+
+
 //Ruta estatica archivos
 app.use('/public',express.static(path.resolve('public')));
 
+const init = require('./libs/init');
+init();
 
 //Starting the server
 app.listen(app.get('port'), () => {
+
     console.log('Server on port 3000')
 });

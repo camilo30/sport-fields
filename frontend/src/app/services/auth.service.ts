@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   signIn(email){
-    return this.http.post<any>(this.URL_API + '/signin', email);
+    return this.http.post<any>(this.URL_API + '/signinAdmin', email);
   }
 
   getUser(token){
@@ -41,6 +41,11 @@ export class AuthService {
 
   getUsers(){
     return this.http.get<any>(this.URL_API);
+  }
+
+  getLogged(){
+    const token = localStorage.getItem('token');
+    return this.http.get<any>(this.URL_API + `/getUser/${token}`);
   }
 
   loggedIn(){
@@ -66,5 +71,9 @@ export class AuthService {
 
   setCurrentEmail(user: any){
     this.currentEmail.next(user);
+  }
+
+  sendMail(body){
+    return this.http.post(this.URL_API + `/sendMail`, body);
   }
 }

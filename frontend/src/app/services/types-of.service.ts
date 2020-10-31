@@ -35,7 +35,11 @@ export class TypesOfService {
   }
 
   getBkgStatus(){
-    return this.http.get<any>(this.URL_API+`/bkgstatus`);
+    return this.http.get<any>(this.URL_API + `/bkgstatus`);
+  }
+
+  getRoles(){
+    return this.http.get<any>(this.URL_API + `/roles`);
   }
 
 
