@@ -22,6 +22,10 @@ export class BookingService {
     return this.http.get<any>(this.URL_API + `/active`);
   }
 
+  getDateActiveBookings(start, end){
+    return this.http.get<any>(this.URL_API + `/dateActive/${start}/${end}`);
+  }
+
   getHistoryBookings(){
     return this.http.get<any>(this.URL_API + `/history`);
   }
@@ -48,6 +52,10 @@ export class BookingService {
 
   getFieldActiveBookings(fieldId){
     return this.http.get<any>(this.URL_API + `/field/active/${fieldId}`);
+  }
+
+  getDateFieldActiveBookings(fieldId, start, end){
+    return this.http.get<any>(this.URL_API + `/field/dateActive/${fieldId}/${start}/${end}`);
   }
 
   getFieldHistoryBookings(fieldId){

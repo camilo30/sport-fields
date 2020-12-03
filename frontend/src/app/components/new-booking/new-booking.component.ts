@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Field} from '../../models/field';
 import {SchedulesService} from '../../services/schedules.service';
 import * as M from '../../../assets/materialize/js/materialize.min.js';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BookingService} from '../../services/booking.service';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/user';;
@@ -130,12 +130,21 @@ export class NewBookingComponent implements OnInit {
 
       }else if (this.user.role.name === 'user'){
         this.datos.patchValue({bkgType: 'P'});
+      }else {
+        if (this.datos.get('bkgType').value ){
+
+        }else{
+          M.toast({html: 'Por favor seleccione el tipo de reserva'});
+          return;
+        }
       }
     }else{
+
+
       this.datos.patchValue({bkgType: 'A'});
     }
 
-    console.log(this.datos.value)
+    //console.log(this.datos.value, this.datos.get('bkgType').value)
     this.bookingService.createBooking(this.datos.value).subscribe( res => {
       M.toast({html: res});
       if (res === 'Reserva solicitada'){
@@ -143,10 +152,6 @@ export class NewBookingComponent implements OnInit {
         window.location.reload();
       }, 1500);
       }
-
-
-
-
     }, error => console.log(error));
 
   }
@@ -161,6 +166,11 @@ export class NewBookingComponent implements OnInit {
 
     var elems1 = document.querySelectorAll('.modal');
     var instances1 = M.Modal.init(elems1);
+  }
+
+  initPickers(){
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems);
   }
 
 }

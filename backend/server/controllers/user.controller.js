@@ -81,10 +81,10 @@ userController.registerUser = async (req, res) => {
    */
     const savedUser = await newUser.save();
 
-    const token = jwt.sign({id: savedUser._id}, config.SECRET,{
-        expiresIn: 84600 //24 horas
+    res.status(200).json({
+        'status':'Usuario registrado',
+        savedUser
     });
-    res.status(200).json({token});
 }
 
 userController.loginAdmin = async (req,res) => {

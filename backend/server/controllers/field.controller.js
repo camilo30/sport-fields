@@ -28,6 +28,18 @@ fieldController.getField = async (req,res) => {
     res.json(field);
 }
 
+fieldController.getByName = async (req, res) => {
+    const field = await Field.find({name:req.params.name});
+    res.json(field);
+
+}
+
+fieldController.getByColor = async (req, res) => {
+    const col = '#'+req.params.color;
+    const field = await Field.find({color: col});
+    res.json(field);
+}
+
 fieldController.editField = async (req,res) => {
     const { id } = req.params;
     const field = {

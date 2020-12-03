@@ -100,6 +100,8 @@ export class MainDirectorComponent implements OnInit, AfterViewInit {
 
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
+
+
   }
 
 

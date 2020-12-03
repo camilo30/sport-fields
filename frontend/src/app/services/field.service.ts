@@ -20,11 +20,19 @@ export class FieldService {
   }
 
   getFields(){
-    return this.http.get<Field[]>(this.URL_API)
+    return this.http.get<Field[]>(this.URL_API +`/all`);
   }
 
   getField(id: string){
-    return this.http.get<Field>(this.URL_API + `/${id}`);
+    return this.http.get<Field>(this.URL_API + `/field/${id}`);
+  }
+
+  getByName(name: string){
+    return this.http.get(this.URL_API + `/nameSearch/${name}`);
+  }
+
+  getByColor(color: string){
+    return this.http.get(this.URL_API + `/colorSearch/${color}` );
   }
 
   postField(name: string, desc: string, color: string, photo: File){

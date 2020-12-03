@@ -27,6 +27,15 @@ export class ScheduleComponent implements OnInit {
 
   }
 
+  initPickers(){
+   var elems = document.querySelectorAll('.datepicker');
+   var instances = M.Datepicker.init(elems);
+
+   var elems1 = document.querySelectorAll('.timepicker');
+   var instances1 = M.Timepicker.init(elems1);
+
+  }
+
   getfield(){
     this.fieldService.getSelectedField().subscribe(res => {
       this.field = res;
@@ -41,24 +50,33 @@ export class ScheduleComponent implements OnInit {
     const b = new Date(endD.value + ' ' + endT.value);
 
     if (this.field){
-      if (a.getHours() !== b.getHours() && a.getHours() < b.getHours()){
-        for (let i = a.getDate(); i <= b.getDate(); i++){
-          for (let j = a.getHours(); j <= (b.getHours() - 1 ); j += 1 ){
-            start = new Date(a.setDate(i));
-            end = new Date(start.setHours(j) + ( 1000 * 60 * 60) );
-            console.log(this.field.name, start.toISOString(), end.toISOString());
-            this.scheduleService.postSchedule(this.field.name, start, end).subscribe( res => {
-              console.log(res);
-            }, error => {} );
+
+      if (a.getDate() <= b.getDate()){
+        if (a.getHours() !== b.getHours() && a.getHours() < b.getHours()){
+          for (let i = a.getDate(); i <= b.getDate(); i++){
+            for (let j = a.getHours(); j <= (b.getHours() - 1 ); j += 1 ){
+              start = new Date(a.setDate(i));
+              end = new Date(start.setHours(j) + ( 1000 * 60 * 60) );
+              this.scheduleService.postSchedule(this.field.name, start, end).subscribe( res => {
+                // console.log(res);
+              }, error => {} );
+            }
           }
+          M.toast({html: 'Horarios generados para el escenario: ' + this.field.name });
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
+        }else{
+          M.toast({html: 'Por favor seleccione una hora final mayor a la inicial'});
         }
-        M.toast({html: 'Horarios generados para el escenario: ' + this.field.name });
-        setTimeout(function () {
-          window.location.reload();
-        }, 2000);
-      }else{
-        M.toast({html: 'Por favor seleccione una hora final mayor a la inicial'});
+
+      } else {
+        M.toast({html: 'Por favor seleccione una fecha final mayor a la inicial'});
       }
+
+
+
+
     }else{
       M.toast({html: 'Por favor seleccione un escenario'});
     }

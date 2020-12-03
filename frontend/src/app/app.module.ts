@@ -34,6 +34,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { MainInstructorComponent } from './components/main-instructor/main-instructor.component';
 import { NewBookingComponent } from './components/new-booking/new-booking.component';
 import { BookingHistoryComponent } from './components/booking-history/booking-history.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { HelpComponent } from './help/help.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -60,7 +62,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ScheduleComponent,
     MainInstructorComponent,
     NewBookingComponent,
-    BookingHistoryComponent
+    BookingHistoryComponent,
+    ReportsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

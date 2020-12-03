@@ -5,7 +5,7 @@
   <div class="card-tabs">
     <ul class="tabs tabs-fixed-width">
       <li class="tab"><a class="active" href="#test4">Escenarios</a></li>
-      <li class="tab"><a href="#test5">Nuevo Escenario</a></li>
+      <li class="tab"><a href="#test5" (mouseover)="initSelect()">Nuevo Escenario</a></li>
     </ul>
   </div>
   <div class="card-content grey lighten-4">
@@ -47,7 +47,8 @@
                   <input #name type="text" name="code" placeholder="Nombre del Escenario" required>
                 </div>
                 <div class="input-field col s12">
-                  <input #desc type="text" name="code" placeholder="Descripción del Escenario" required>
+                  <textarea #desc class="materialize-textarea" name="code" placeholder="Descripción del Escenario" required cols="30" rows="10"></textarea>
+                  <!-- <input #desc type="text" name="code" placeholder="Descripción del Escenario" required> -->
                 </div>
                 <div class="input-field col s12">
                   <select #color>
@@ -108,7 +109,7 @@
                   </div>
                 </div>
                 <div class="center">
-                  <button  class=" btn yellow darken-2">Crear</button>
+                  <button  class=" btn yellow darken-2">Agregar</button>
                 </div>
               </form>
 

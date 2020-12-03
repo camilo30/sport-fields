@@ -9,7 +9,7 @@
       <thead class="center-align">
       <th>Usuario</th><th>Escenario</th><th>Fecha</th><th>Inicio</th><th>Fin</th><th>Estado</th><th>Motivo de rechazo</th>
       </thead>
-      <tbody *ngFor="let ub of bookings">
+      <tbody style="font-size:12px" *ngFor="let ub of bookings">
       <tr>
         <td>{{ub.user.email }}</td>
         <td><font color="{{ub.schedule[0].field.color}}">{{ub.schedule[0].field.name }}</font></td>
@@ -86,7 +86,7 @@
       <th>Estado</th>
       <th>Motivo de rechazo</th>
       </thead>
-      <tbody *ngFor="let booking of bookings">
+      <tbody style="font-size:12px" *ngFor="let booking of bookings">
       <tr>
         <td>{{booking.schedule[0].field.name}}</td>
         <td>{{booking.schedule[0].start | date}}</td>

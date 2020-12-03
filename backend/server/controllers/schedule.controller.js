@@ -9,7 +9,7 @@ scheduleController.getSchedules = async (req, res) =>{
     res.json(schedules);
 }
 
-// ONTENER UN SOLO HORARIO
+// OBTENER UN SOLO HORARIO
 scheduleController.getSchedule = async (req, res) => {
     const schedule = await Schedule.findById(req.params.id).populate('field');
     res.json(schedule);
@@ -17,7 +17,7 @@ scheduleController.getSchedule = async (req, res) => {
 
 // OBTENER HORARIOS RESERVADOS DE UN ESCENARIO
 scheduleController.getFieldSchedules = async (req, res) => {
-    const schedule = await Schedule.find({field: req.params.fieldId, available:false}).populate('field');
+    const schedule = await Schedule.find({field: req.params.fieldId}).populate('field');
     res.status(200).send(schedule);
 }
 
@@ -44,7 +44,7 @@ scheduleController.getBookedSchedules = async (req, res) => {
     const schedule = await Schedule.find({available:false}).populate('field');
     res.status(200).send(schedule);
 }
-
+ // GENERAR HORARIOS
 scheduleController.createSchedule = async (req, res) => {
     const {field, start, end} = req.body;
 

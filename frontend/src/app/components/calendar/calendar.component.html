@@ -1,4 +1,4 @@
-<ng-container *ngIf="user">
+ <ng-container *ngIf="user">
 
   <ng-container *ngIf="user.role.name === 'director'; else nD">
     <full-calendar [options]="calendarOptions"></full-calendar>
@@ -11,7 +11,7 @@
     </ng-container>
 
     <ng-template #nC>Por favor seleccione un escenario.</ng-template>
-  </ng-template>
+   </ng-template>
 </ng-container>
 
 

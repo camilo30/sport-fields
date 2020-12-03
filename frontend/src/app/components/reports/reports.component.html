@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title yellow-text text-darken-2"><strong>Reportes</strong></span>
+      <form action="">
+        <div class="row">
+          <div class="col l3 offset-l3">
+            <div class="input-field">
+              <input #start id="start" class="datepicker" type="text" placeholder="Fecha inicial" >
+              <label for="start" class="active">Desde:</label>
+            </div>
+          </div>
+          <div class="col l3">
+            <div class="input-field">
+              <input #end id="end" class="datepicker" type="text" placeholder="Fecha final" >
+              <label for="end" class="active">Hasta:</label>
+            </div>
+          </div>
+        </div>
+        <div class="center"><button class="btn yellow darken-2" (click)="getReports(start, end)">Aceptar</button></div>
+      </form>
+
+
+ <br/>
+
+
+<ng-container *ngIf="byUser && byStatus && byType && byField && hByField">
+
+  <ng-container *ngIf="hByField.length > 0 || byField.length > 0 || byType.length > 0 || byStatus.length > 0 || byUser.length > 0; else noInfo">
+
+    <!-- HORAS DE USO POR ESCENARIO -->
+    <div class="card">
+      <div class="card-content">
+        <spán class="card-title center">Escenarios: Horas de Uso</spán>
+        <table>
+          <thead><th>Escenario Deportivo</th><th>Horas de uso</th></thead>
+          <tbody *ngFor="let hf of hByField">
+          <tr>
+            <td width="50%">{{hf._id.name}}</td>
+            <td>{{hf.count}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- RESERVAS APROBADAS POR ESCENARIO -->
+    <div class="card">
+      <div class="card-content">
+        <spán class="card-title center">Reservas Aprobadas por Escenario</spán>
+        <table>
+          <thead><th>Escenario Deportivo</th><th>Cantidad de Reservas</th></thead>
+          <tbody *ngFor="let bf of byField">
+          <tr>
+            <td width="50%">{{bf._id.name}}</td>
+            <td>{{bf.count}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- RESERVAS APROBADAS POR TIPO DE RESERVA -->
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title center">Reservas Aprobadas (Tipos de Reserva)</span>
+        <table>
+          <thead><th>Tipo de Reserva</th><th>Cantidad de Reservas</th></thead>
+          <tbody *ngFor="let bt of byType">
+          <tr><td width="50%">{{bt._id.desc}}</td><td>{{bt.count}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- TODAS RESERVAS POR ESTADO -->
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title center">Todas las Reservas</span>
+        <table>
+          <thead><th>Estado de Reserva</th><th>Cantidad de Reservas</th></thead>
+          <tbody *ngFor="let bs of byStatus">
+          <tr><td width="50%">{{bs._id.name}}</td><td>{{bs.count}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- RESERVAS APROBADAS POR TIPO DE RESERVA -->
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title center">Reservas Aprobadas por Usuario</span>
+        <table>
+          <thead><th>Correo</th><th>Nombre</th><th>Cantidad de Reservas</th></thead>
+          <tbody *ngFor="let bu of byUser">
+          <tr><td>{{bu._id.email}}</td><td>{{bu._id.name}}</td><td>{{bu.count}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </ng-container>
+
+</ng-container>
+
+
+<ng-template #noInfo>No existe información.</ng-template>
+
+
+
+</div>
+  </div>
+  </div>

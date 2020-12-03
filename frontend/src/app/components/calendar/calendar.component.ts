@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
             aux.setHours(aux.getHours());
             aux2.setHours(aux2.getHours());
             if (b.bkgStatus.code === 'A') {
-              if(b.bkgType.code === 'E' || b.bkgType.code === 'U'){
+              if (b.bkgType.code === 'E' || b.bkgType.code === 'U'){
                 this.ev.push({start: aux, end: aux2, title: b.desc, color: b.schedule[0].field.color});
               } else{
                 this.ev.push({start: aux, end: aux2, title: b.user.email, color: b.schedule[0].field.color});
@@ -118,7 +118,12 @@ export class CalendarComponent implements OnInit {
             let aux2 = new Date(e.end);
             aux.setHours(aux.getHours());
             aux2.setHours(aux2.getHours());
-            this.ev.push({start: aux, end: aux2});
+            if (e.available === true){
+              this.ev.push({start: aux, end: aux2, color: '#9b9b9b'});
+            } else {
+              this.ev.push({start: aux, end: aux2, color: '#fbc02d'});
+            }
+
           }
           this.CalendarOptions();
         });
@@ -136,7 +141,7 @@ export class CalendarComponent implements OnInit {
         list: 'Lista'
       },
       headerToolbar: {
-        center: 'timeGridWeek,dayGridMonth,listWeek'
+        center: 'timeGridWeek,dayGridMonth,listWeek',
       },
       slotMinTime: '06:00:00',
       slotMaxTime: '20:00.00',

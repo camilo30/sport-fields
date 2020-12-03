@@ -6,9 +6,13 @@ const field = require('../controllers/field.controller');
 
 
 //Rutas escenarios
-router.get('/', field.getFields);
+
 router.post('/',multer.single('image'),field.createField);
-router.get('/:id',field.getField);
+
+router.get('/nameSearch/:name', field.getByName);
+router.get('/colorSearch/:color', field.getByColor);
+router.get('/field/:id',field.getField);
+router.get('/all', field.getFields);
 router.put('/:id',field.editField);
 router.delete('/:id',field.deleteField);
 

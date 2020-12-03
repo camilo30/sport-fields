@@ -5,7 +5,7 @@
 </ng-container>
 
 <div class="input-field">
-  <input #date (click)="load(date)" (change)="load(date)" type="text" class="datepicker" placeholder="Fecha" >
+  <input #date (click)="load(date)" (change)="load(date)" type="text" class="datepicker" placeholder="Fecha" (mouseover)="initPickers()">
 </div>
 
 <div class="row">
@@ -21,7 +21,7 @@
    <ng-container *ngIf="user">
 
      <ng-container *ngIf="user.role.name === 'director'">
-       Tipo de Reserva
+       Tipo de Reserva:<br/>
        <label >
          <input name="bkgType" formControlName="bkgType" value="E" type="radio">
          <span>Entrenamiento</span>
@@ -144,6 +144,6 @@
 
    </ng-container>
 
-      <div class="center"><button type="submit" class="btn yellow darken-2">Solicitar</button></div>
+      <div class="center"><button type="submit" class="btn yellow darken-2" >Solicitar</button></div>
   </form>
 </div>

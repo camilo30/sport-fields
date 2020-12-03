@@ -73,6 +73,28 @@ bookingController.getActiveBookings = async (req,res) => {
     res.status(200).send(booking);
 }
 
+//Obtener todas las reservas activas entre dos fechas
+bookingController.getDateActiveBookings = async (req,res) => {
+    const status = await BkgStatus.find({code: 'A'});
+    const startDate = new Date(req.params.start);
+    const endDate = new Date(req.params.end);
+    const sch = await Schedule.find({start: {$gt: startDate, $lt: endDate}, available:false}).sort('start');
+
+    const booking = await Booking.find({bkgStatus: {$in: status}, schedule:{$in: sch}}).lean().populate('bkgType').populate('bkgStatus').populate('user').populate('attachment').populate([
+        {
+            path: 'schedule',
+            model: 'Schedule',
+            select: 'start end available',
+
+            populate: {
+                path: 'field',
+                model: 'Field',
+            }
+        },
+    ]);
+    res.json(booking);
+}
+
 //Obtener histórico de todas las reservas
 bookingController.getHistoryBookings = async (req,res) => {
     const status = await BkgStatus.find({code: {$in: ['S','A']}});
@@ -122,7 +144,8 @@ bookingController.getUserActiveBookings = async (req,res) => {
     const sch = await Schedule.find({start: {$gt: date}, available:false});
 
     const booking = await Booking.find({user: req.params.userId, bkgStatus: {$in: status}, schedule:{$in: sch}}).lean().populate('bkgType').populate('bkgStatus').populate('user').populate('attachment').populate([
-        {
+    //const booking = await Booking.find({user: req.params.userId},{bkgStatus: {$in: status}, schedule:{$in: sch}}).lean().populate('bkgType').populate('bkgStatus').populate('user').populate('attachment').populate([
+            {
             path: 'schedule',
             model: 'Schedule',
             select: 'start end available',
@@ -132,6 +155,7 @@ bookingController.getUserActiveBookings = async (req,res) => {
             }
         },
     ]);
+    console.log('booking', booking)
     res.status(200).send(booking);
 }
 
@@ -217,6 +241,27 @@ bookingController.getFieldActiveBookings = async (req,res) => {
     res.status(200).send(booking);
 }
 
+//Obtener todas las reservas activas de un escenario entre dos fechas
+bookingController.getDateFieldActiveBookings = async (req,res) => {
+    const status = await BkgStatus.find({code: 'A'});
+    const startDate = new Date(req.params.start);
+    const endDate = new Date(req.params.end);
+    const sch = await Schedule.find({field: req.params.fieldId,start: {$gt: startDate, $lt: endDate}, available:false});
+
+    const booking = await Booking.find({bkgStatus: {$in: status}, schedule:{$in: sch}}).lean().populate('bkgType').populate('bkgStatus').populate('user').populate('attachment').populate([
+        {
+            path: 'schedule',
+            model: 'Schedule',
+            select: 'start end available',
+            populate: {
+                path: 'field',
+                model: 'Field',
+            }
+        },
+    ]);
+    res.json(booking);
+}
+
 //Obtener historico de reservas de un escenario
 bookingController.getFieldHistoryBookings = async (req,res) => {
     const status = await BkgStatus.find({code: {$in: ['S','A']}});
@@ -254,15 +299,12 @@ bookingController.createBooking = async (req, res) => {
         fattendant = req.files[1];
     }
 
-
-
-
-
     let consecutives = true;
 
     if (schedule){
         const auxS = schedule.split(',')
-        const schedules = await Schedule.find({_id: {$in: auxS}});
+        const schedules = await Schedule.find({_id: {$in: auxS}}).sort('start');
+
 
 
 
@@ -277,6 +319,7 @@ bookingController.createBooking = async (req, res) => {
                 }
             }
         }
+
 
         if (consecutives){
             var bkgStatus = 'Solicitada';
@@ -364,7 +407,7 @@ bookingController.createBooking = async (req, res) => {
                 return res.json('Reserva solicitada');
             }
         } else {
-            return res.json('Los Horarios no son consecutivos');
+            return res.json('Los Horarios deben ser consecutivos');
         }
 
     } else {

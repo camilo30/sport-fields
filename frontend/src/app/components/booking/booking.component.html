@@ -9,8 +9,9 @@
       <thead class="center-align">
       <th>Solicitada</th><th>Usuario</th><th>Escenario</th><th>Fecha</th><th>Inicio</th><th>Fin</th><th>Adjuntos</th><th>Estado</th><th>Acciones</th>
       </thead>
-      <tbody *ngFor="let ub of bookings">
-      <tr>
+      <tbody style="font-size:12px" *ngFor="let ub of bookings">
+      <tr >
+
         <td>{{ub.createdAt | date: 'medium'}}</td>
 
         <ng-container *ngIf="ub.bkgType.code === 'P'">
@@ -35,21 +36,21 @@
         <td>{{ub.schedule[0].start | date}}</td>
         <td>{{ub.schedule[0].start | date:'shortTime'}}</td>
         <td>{{ub.schedule[(ub.schedule).length-1].end | date:'shortTime'}}</td>
-        <td><span *ngFor="let a of ub.attachment"><a [href]="'http://localhost:3000/'+a.path" download>{{a.desc}}, </a></span></td>
+        <td><span *ngFor="let a of ub.attachment"><a [href]="'http://localhost:3000/'+a.path" download>'{{a.desc}}' </a></span></td>
 
         <ng-container *ngIf="ub.bkgStatus.name === 'Solicitada'">
           <td>
             <span class="tooltipped new badge teal darken-2" data-position="top" data-tooltip="Reserva solicitada, el administrador validará disponibilidad." data-badge-caption="Solicitada" (mouseover)="initTooltip()"></span>
           </td>
           <td>
-            <a class="tooltipped btn red darken-2"  data-position="top" data-tooltip="Rechazar" (click)="RejectBooking(ub._id)"><i class="material-icons">cancel</i></a>
-            <a class="tooltipped btn green darken-2" data-position="top" data-tooltip="Aprobar" (click)="ApproveBooking(ub._id)"><i class="material-icons">check</i></a>
+            <a class="tooltipped "  data-position="top" data-tooltip="Rechazar" (click)="RejectBooking(ub._id)"><i class="material-icons red-text text-darken-2">cancel</i></a>
+            <a class="tooltipped " data-position="top" data-tooltip="Aprobar" (click)="ApproveBooking(ub._id)"><i class="material-icons green-text text-darken-2">check</i></a>
           </td>
         </ng-container>
 
         <ng-container *ngIf="ub.bkgStatus.name === 'Aprobada'">
           <td><span class="tooltipped new badge green darken-2" data-position="top" data-tooltip="Documentación válida, reserva aprobada." data-badge-caption="Aprobada" (mouseover)="initTooltip()"></span></td>
-          <td><a class="tooltipped btn red darken-2"  data-position="top" data-tooltip="Rechazar" (click)="RejectBooking(ub._id)"><i class="material-icons">cancel</i></a></td>
+          <td><a class="tooltipped"  data-position="top" data-tooltip="Rechazar" (click)="RejectBooking(ub._id)"><i class="material-icons red-text text-darken-2">cancel</i></a></td>
         </ng-container>
 
 
@@ -137,7 +138,7 @@
       <th>Estado</th>
       <th>Acciones</th>
       </thead>
-      <tbody *ngFor="let booking of bookings">
+      <tbody style="font-size:12px" *ngFor="let booking of bookings">
       <tr>
         <td>{{booking.createdAt | date: 'medium'}}</td>
         <td>{{booking.schedule[0].field.name}}</td>
@@ -150,12 +151,12 @@
           <td>
             <span class="tooltipped new badge teal darken-2" data-position="top" data-tooltip="Reserva solicitada, el administrador validará disponibilidad." data-badge-caption="Solicitada" (mouseover)="initTooltip()"></span>
           </td>
-          <td><a tooltipped class="tooltipped btn red darken-2" data-position="top" data-tooltip="Cancelar" (click)="CancelBooking(booking._id)"><i class="material-icons">cancel</i></a></td>
+          <td><a tooltipped class="tooltipped" data-position="top" data-tooltip="Cancelar" (click)="CancelBooking(booking._id)"><i class="material-icons red-text text-darken-2">cancel</i></a></td>
         </ng-container>
 
         <ng-container *ngIf="booking.bkgStatus.name === 'Aprobada'">
           <td><span class="tooltipped new badge green darken-2" data-position="top" data-tooltip="Documentación válida, reserva aprobada." data-badge-caption="Aprobada" (mouseover)="initTooltip()"></span></td>
-          <td><a tooltipped class="tooltipped btn red darken-2" data-position="top" data-tooltip="Cancelar" (click)="CancelBooking(booking._id)"><i class="material-icons">cancel</i></a></td>
+          <td><a tooltipped class="tooltipped " data-position="top" data-tooltip="Cancelar" (click)="CancelBooking(booking._id)"><i class="material-icons red-text text-darken-2">cancel</i></a></td>
         </ng-container>
 
         <ng-container *ngIf="booking.bkgStatus.name === 'Cancelada'">

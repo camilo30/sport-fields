@@ -34,6 +34,7 @@ app.use('/api/fields', require('./routes/field.routes'));
 app.use('/api/schedules',require('./routes/schedule.routes'));
 app.use('/api/attachments', require('./routes/attachment.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
+app.use('/api/reports', require('./routes/reports.routes'));
 app.use('/api/', require('./routes/user.routes'));
 
 
@@ -48,5 +49,5 @@ init();
 //Starting the server
 app.listen(app.get('port'), () => {
 
-    console.log('Server on port 3000')
+    console.log(`Server on port ${app.get('port')}`)
 });
