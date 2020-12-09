@@ -12,6 +12,7 @@ import {SigninUserComponent} from './components/signin-user/signin-user.componen
 import { MainDirectorComponent } from './components/main-director/main-director.component';
 import {MainAdminComponent} from "./components/main-admin/main-admin.component";
 import {MainInstructorComponent} from "./components/main-instructor/main-instructor.component";
+import {HelpComponent} from "./components/help/help.component";
 
 const routes: Routes = [
   // Solicitar login: canActivate: [AuthGuard], data: roles
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
 
   { path: 'signin', component: SigninUserComponent},
+  { path: 'help', component: HelpComponent},
   { path: 'main', component: MainComponent, canActivate: [AuthGuard], data: {role: 'user'} },
 
   { path: 'signinAdmin', component: SigninComponent },

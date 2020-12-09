@@ -1,68 +1,151 @@
+<!-- BARRA SUPERIOR -->
+<nav>
+  <div class="nav-wrapper grey darken-4">
+    <div class="container">
+      <a href="#" class="brand-logo center"></a>
+      <a href="#" class="sidenav-trigger" data-target="mobile-demo"><i class="material-icons">menu</i></a>
+      <ul class="left">
+        <li><a routerLink="/"><img class="responsive-img"  src="../assets/logo-blanco2.png" alt=""></a></li>
+        <li>Escenarios deportivos</li>
+      </ul>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <ng-container *ngIf="user.role.name==='director';else userM"><li><a href="/mainD">Inicio</a></li></ng-container>
+        <ng-template #userM><li><a href="/main">Inicio</a></li></ng-template>
+        <li><a href="/signin">Salir</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- BARRA LATERAL -->
+<ul class="sidenav" id="mobile-demo">
+  <li><div class="user-view">
+    <div class="background">
+      <img height="200px" src="../assets/uptc.jpg">
+    </div>
+    <img class="circle" src="../assets/default-user-image.png">
+    <span class="name white-text">{{user.name}}</span>
+    <span class="email white-text">{{user.email}}</span>
+  </div></li>
+  <li><a routerLink="/signin">Salir</a></li>
+</ul>
+
 
 
 <div class="container">
+<div class="row"></div>
   <div class="row">
+   <div class="center"><h4 class="yellow-text text-darken-2">Ayuda</h4></div>
 
 
-    <div class="col l6 m12 s12">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Registro</span>
-          <div class="video-container">
-            <iframe
-              src="https://youtube.com/embed/GJOzSV8tR8o" allowfullscreen>
-            </iframe>
+      <ng-container *ngIf="user.role.name === 'director';else userHelp">
+
+        <!-- ESCENARIOS -->
+        <div class="col l6 m12 s12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Escenarios</span>
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/0NcytnlqLWc" allowfullscreen></iframe>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <!-- HORARIOS -->
+        <div class="col l6 m12 s12">
+          <div class="card"><div class="card-content">
+            <span class="card-title">Horarios</span>
+            <div class="video-container">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/oXS7rScquMQ" allowfullscreen></iframe>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- RESERVAS -->
+        <div class="col l6 m12 s12">
+          <div class="card"><div class="card-content">
+            <span class="card-title">Reservas</span>
+            <div class="video-container">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/QmDvEcpmHSA" allowfullscreen></iframe>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- RESERVAS -->
+        <div class="col l6 m12 s12">
+          <div class="card"><div class="card-content">
+            <span class="card-title">Módulo Director</span>
+            <div class="video-container">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/tdAcMQ13Jdo" allowfullscreen></iframe>
+            </div>
+          </div></div>
+        </div>
 
 
-    <div class="col l6 m12 s12">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Escenarios</span>
-          <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/0NcytnlqLWc" allowfullscreen></iframe>
+
+
+
+
+
+        </ng-container>
+
+      <ng-template #userHelp>
+
+        <!-- REGISTRO -->
+        <div class="col l6 m12 s12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Registro</span>
+              <div class="video-container">
+                <iframe
+                  src="https://youtube.com/embed/GJOzSV8tR8o" allowfullscreen>
+                </iframe>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-
-    <div class="col l6 m12 s12">
-      <div class="card"><div class="card-content">
-        <span class="card-title">Horarios</span>
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/oXS7rScquMQ" allowfullscreen></iframe>
-        </div>
-      </div></div>
-    </div>
-
-
-    <div class="col l6 m12 s12">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Registro</span>
-          <div class="video-container">
-            <iframe
-              src="https://youtube.com/embed/GJOzSV8tR8o" allowfullscreen>
-            </iframe>
+        <!-- SOLICITAR RESERVA -->
+        <div class="col l6 m12 s12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Solicitar Reserva</span>
+              <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dOOwNWITJZU" allowfullscreen></iframe>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <!-- RESERVAs -->
+        <div class="col l6 m12 s12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Reservas</span>
+              <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5zZLHE7zoSw" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/dOOwNWITJZU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/tdAcMQ13Jdo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/lLOhtlQZb2E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/QmDvEcpmHSA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/5zZLHE7zoSw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+      </ng-template>
+
+
+
+
+
+
+
 
 
 

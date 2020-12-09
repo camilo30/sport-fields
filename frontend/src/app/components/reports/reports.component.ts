@@ -31,11 +31,16 @@ export class ReportsComponent implements OnInit {
     if (startD.value && endD.value){
       const start = new Date(startD.value);
       const end = new Date(endD.value);
-      this.getByStatus(start, end);
-      this.getByType(start, end);
-      this.getByUser(start, end);
-      this.getByField(start, end);
-      this.getHoursByField(start, end);
+
+      if (start.getDate() < end.getDate()){
+        this.getByStatus(start, end);
+        this.getByType(start, end);
+        this.getByUser(start, end);
+        this.getByField(start, end);
+        this.getHoursByField(start, end);
+      } else {
+        M.toast({html:'Por favor seleccione una fecha final mayor a la inicial'});
+      }
     } else {
       M.toast({html:'Por favor seleccione Fecha inicial y Fecha final'});
     }
@@ -74,6 +79,12 @@ export class ReportsComponent implements OnInit {
       console.log('hours:', res);
       this.hByField = res;
     }, error => console.log(error));
+  }
+
+  initPickers(){
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems);
+
   }
 
 

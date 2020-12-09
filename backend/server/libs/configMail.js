@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
 const Booking = mongoose.model('Booking');
+const UserType = mongoose.model('UserType');
 
 module.exports = async(req, res) => {
 
@@ -55,7 +56,10 @@ module.exports = async(req, res) => {
         });
 
     } else {
-        if(foundB.user.userType.internal){
+
+        const foundUt = await UserType.findById(foundB.user.userType);
+
+        if(foundUt.internal === true){
             const mailOptions = {
                 from: "Préstamo de escenarios deportivos - UPTC Seccional Sogamoso",
                 to: foundB.user.email,

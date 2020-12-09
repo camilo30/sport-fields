@@ -70,6 +70,9 @@ export class MainDirectorComponent implements OnInit, AfterViewInit {
   borrarFiltro(){
     this.fieldService.setSelectedField(null);
     this.getFields();
+
+   this.datos.controls['field1'].reset();
+
   }
 
   getUser(){
